@@ -1,5 +1,3 @@
-'use client';
-
 /**
  * Retrieves the user token from the server.
  * @returns {Promise<string|null>} The user token if successful, or null if there was an error.
@@ -19,7 +17,27 @@ export async function getUserToken() {
 	return data;
 }
 
+/**
+ * Retrieves the user object from the server using the provided user token.
+ *
+ * @param {string} userToken - The user token used for authentication.
+ * @returns {Promise<object|null>} - A promise that resolves to the user object if successful, or null if there was an error.
+ */
 export async function getUserObject(userToken) {
-	let response = await fetch(`${process.env.NEXT_PUBLIC_MTM_URL}/userinfo`, {});
+	try {
+		let response = await fetch(`${process.env.NEXT_PUBLIC_AUTH0_DOMAIN}/userinfo`, {
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${userToken}`,
+			},
+		});
+
+		if (!response.ok) return null;
+
+		let data = await response.json();
+		return data;
+	} catch (error) {
+		console.log(error);
+	}
 }
 
