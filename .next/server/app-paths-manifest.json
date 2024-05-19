@@ -1,3 +1,8 @@
 {
-  "/page": "app/page.js"
+  "/_not-found/page": "app/_not-found/page.js",
+  "/page": "app/page.js",
+  "/api/auth/getUserToken/route": "app/api/auth/getUserToken/route.js",
+  "/api/auth/[auth0]/route": "app/api/auth/[auth0]/route.js",
+  "/api/channelManagement/getUserChannels/route": "app/api/channelManagement/getUserChannels/route.js",
+  "/channels/[channel]/page": "app/channels/[channel]/page.js"
 }

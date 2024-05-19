@@ -29,10 +29,12 @@ function connectDatabase() {
  * @param {Array} values The values to be inserted into the query
  * @returns {Promise} The result of the query
  */
-export default async function executeQuery(query, values = []) {
+export async function executeQuery(query, values = []) {
 	return new Promise((resolve, reject) => {
 		con.query(query, values, (error, result) => {
 			if (error) {
+				console.log(`Error executing query: ${query}`);
+				console.log(error);
 				reject(error);
 			} else {
 				resolve(JSON.stringify(result));

@@ -7,13 +7,13 @@
 // Component Imports
 import ChatInput from '/components/chatInput';
 import ChatWindow from '/components/chatWindow';
+import ChannelSelection from '/components/channelSelection';
 
 export default function Page() {
 	return (
-		<div>
-			<ChatWindow />
-			<ChatInput />
-		</div>
+		<>
+			<ChannelSelection />
+		</>
 	);
 }
 
