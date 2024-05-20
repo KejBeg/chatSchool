@@ -8,24 +8,28 @@ import mainContext from '/contexts/mainContextProvider';
 
 // Component Imports
 
-export default function chatInput() {
+export default function chatInput({ currentChannelID }) {
 	// State Variables
 	const [message, setMessage] = useState('');
 
 	// Context Variables
 	const { userToken } = useContext(mainContext);
 
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault();
-		fetch('/api/messageManagement/addMessage', {
+		let response = await fetch('/api/messageManagement/addMessage', {
 			method: 'POST',
 			headers: {
 				authorization: userToken,
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ message }),
+			body: JSON.stringify({ message, channelID: currentChannelID }),
 		});
+
+		// Resetting the message
 		setMessage('');
+
+		// Check if the response is ok
 	};
 	return (
 		<form onSubmit={(e) => handleSubmit(e)}>
