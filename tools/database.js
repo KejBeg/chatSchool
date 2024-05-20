@@ -45,7 +45,8 @@ export async function executeQuery(query, values = []) {
 
 // Setup the database
 function setupDatabase() {
-	const createChannelsTable = `CREATE TABLE IF NOT EXISTS channels (id INT PRIMARY KEY AUTO_INCREMENT, name TEXT, owner TEXT, created_at DATETIME)`;
+	const createChannelsTable =
+		'CREATE TABLE IF NOT EXISTS channels (id INT PRIMARY KEY AUTO_INCREMENT, name TEXT, owner TEXT, users JSON, created_at DATETIME);';
 	const createMessagesTable = `CREATE TABLE IF NOT EXISTS messages(id INT PRIMARY KEY AUTO_INCREMENT, message TEXT, channel INT, owner TEXT, created_at DATETIME, FOREIGN KEY(channel) REFERENCES channels(id))`;
 
 	// Execute the queries

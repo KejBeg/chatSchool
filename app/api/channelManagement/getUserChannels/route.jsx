@@ -2,12 +2,12 @@
 
 // Tools Imports
 import { executeQuery } from '/tools/database.js';
-import { getUserObject } from '/tools/publicTools';
+import { getUserObjectByToken } from '/tools/publicTools';
 
 export async function GET(request) {
 	try {
 		const authorization = request.headers.get('authorization');
-		const userObject = await getUserObject(authorization);
+		const userObject = await getUserObjectByToken(authorization);
 
 		// Check if user is authorized
 		if (!userObject || !authorization) {

@@ -23,7 +23,7 @@ export async function getUserToken() {
  * @param {string} userToken - The user token used for authentication.
  * @returns {Promise<object|null>} - A promise that resolves to the user object if successful, or null if there was an error.
  */
-export async function getUserObject(userToken) {
+export async function getUserObjectByToken(userToken) {
 	try {
 		let response = await fetch(`${process.env.NEXT_PUBLIC_AUTH0_DOMAIN}/userinfo`, {
 			method: 'GET',
@@ -38,6 +38,7 @@ export async function getUserObject(userToken) {
 		return data;
 	} catch (error) {
 		console.log(error);
+		return null;
 	}
 }
 

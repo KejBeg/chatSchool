@@ -1,8 +1,18 @@
+// Module Imports
+
+// Tool Imports
+
+// Component Imports
+import ChatWindow from '/components/chatWindow';
+import ChatInput from '/components/chatInput';
+
 export default function Page({ params }) {
+	const currentChannelID = params.channel;
 	return (
-		<div>
-			<h1>Page ID: {params.channel}</h1>
-		</div>
+		<>
+			<ChatWindow currentChannelID={currentChannelID} />
+			<ChatInput currentChannelID={currentChannelID} />
+		</>
 	);
 }
 

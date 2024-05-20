@@ -2,14 +2,15 @@
 
 // Tools Imports
 import { executeQuery } from '/tools/database.js';
-import { getNextAccessToken, getUserObject } from '/tools/publicTools';
+import { getNextAccessToken, getUserObjectByToken } from '/tools/publicTools';
 
 export async function POST(request) {
 	try {
 		const requestBody = await request.json();
 		const authorization = request.headers.get('authorization');
+		const userObject = await getUserObjectByToken(authorization);
 		const message = requestBody.message;
-		const userObject = await getUserObject(authorization);
+		const channelID = requestBody.channelID;
 
 		// Check if the message is provided
 		if (!message) {
@@ -21,9 +22,10 @@ export async function POST(request) {
 			return new Response('Unauthorized', { status: 401 });
 		}
 
+		// Saving the message to the database
 		executeQuery(
-			`INSERT INTO messages (message, owner, created_at) VALUES (?, ?, CURRENT_TIMESTAMP)`,
-			[message, userObject.sub]
+			`INSERT INTO messages (message, owner, created_at, channel) VALUES (?, ?, CURRENT_TIMESTAMP, ?)`,
+			[message, userObject.sub, channelID]
 		);
 
 		return new Response('Message sent', { status: 200 });
