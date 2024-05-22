@@ -1,8 +1,8 @@
-// File: /home/kejbeg/coding/chatSchool/app/api/channelManagement/getUserChannels/route.jsx
-import * as entry from '../../../../../../app/api/channelManagement/getUserChannels/route.js'
+// File: /home/kejbeg/coding/chatSchool/app/api/messageManagement/addMessage/route.jsx
+import * as entry from '../../../../../../app/api/messageManagement/addMessage/route.js'
 import type { NextRequest } from 'next/server.js'
 
-type TEntry = typeof import('../../../../../../app/api/channelManagement/getUserChannels/route.js')
+type TEntry = typeof import('../../../../../../app/api/messageManagement/addMessage/route.js')
 
 // Check that the entry is a valid entry
 checkFields<Diff<{

@@ -22,6 +22,7 @@ export async function POST(request) {
 			return new Response('Unauthorized', { status: 401 });
 		}
 
+		// Getting all messages for the channel
 		let messages = await executeQuery(
 			`SELECT * FROM messages WHERE channel = ? ORDER BY created_at ASC`,
 			[channelID]

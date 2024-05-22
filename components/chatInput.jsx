@@ -13,10 +13,14 @@ export default function chatInput({ currentChannelID }) {
 	const [message, setMessage] = useState('');
 
 	// Context Variables
-	const { userToken } = useContext(mainContext);
+	const { userToken, socket, isConnected, transport } = useContext(mainContext);
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
+
+		// Resetting the message
+		setMessage('');
+
 		let response = await fetch('/api/messageManagement/addMessage', {
 			method: 'POST',
 			headers: {
@@ -26,11 +30,10 @@ export default function chatInput({ currentChannelID }) {
 			body: JSON.stringify({ message, channelID: currentChannelID }),
 		});
 
-		// Resetting the message
-		setMessage('');
-
-		// Check if the response is ok
+		// Emitting the message
+		if (response.ok) socket.emit('refreshMessages', currentChannelID);
 	};
+
 	return (
 		<form onSubmit={(e) => handleSubmit(e)}>
 			<input
