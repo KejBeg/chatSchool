@@ -46,6 +46,12 @@ export default function ChannelSelection() {
 		// Check if user token is available
 		if (!userToken) return;
 
+		// Reset the channel name
+		setChannelName('');
+
+		// Hide the create channel form
+		setShowCreateChannel(false);
+
 		// Create a new channel
 		let response = await fetch('/api/channelManagement/createChannel', {
 			method: 'POST',
@@ -57,12 +63,6 @@ export default function ChannelSelection() {
 
 		// Refresh the channels
 		setRefreshChannels(!refreshChannels);
-
-		// Reset the channel name
-		setChannelName('');
-
-		// Hide the create channel form
-		setShowCreateChannel(false);
 	};
 
 	const deleteChannel = async (channelID) => {

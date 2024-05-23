@@ -1,41 +1,17 @@
 'use client';
 
-import { useEffect, useState, useContext } from 'react';
-import mainContext from '/contexts/mainContextProvider';
+// Module Imports
 
-export default function Home() {
-	const { socket } = useContext(mainContext);
+// Tool Imports
 
-	useEffect(() => {
-		// if (socket.connected) {
-		// 	onConnect();
-		// }
-		// function onConnect() {
-		// 	setIsConnected(true);
-		// 	setTransport(socket.io.engine.transport.name);
-		// 	socket.io.engine.on('upgrade', (transport) => {
-		// 		setTransport(transport.name);
-		// 	});
-		// }
-		// function onDisconnect() {
-		// 	setIsConnected(false);
-		// 	setTransport('N/A');
-		// }
-		// socket.on('connect', onConnect);
-		// socket.on('disconnect', onDisconnect);
+// Component Imports
+import ChannelSelection from '/components/channelSelection';
 
-		if (socket) {
-			socket.on('refreshMessages', (value) => {
-				console.log(value);
-			});
-		}
-	});
-
+export default function Page() {
 	return (
-		<div>
-			<div>{socket && ((socket.connected && 'true') || 'false')}</div>
-			<button onClick={() => socket.emit('refreshMessages', 1)}></button>
-		</div>
+		<>
+			<ChannelSelection />
+		</>
 	);
 }
 

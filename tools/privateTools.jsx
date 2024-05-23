@@ -82,6 +82,27 @@ export async function getUserObjectBySub(userSub) {
 		},
 	});
 
+	if (!response.ok) return null;
+
+	let data = await response.json();
+
+	return data;
+}
+
+/**
+ * Retrieves all users from the API.
+ * @returns {Promise<Object[]|null>} A promise that resolves to an array of user objects, or null if the request fails.
+ */
+export async function getAllUsers() {
+	let response = await fetch(`${process.env.NEXT_PUBLIC_AUTH0_DOMAIN}/api/v2/users`, {
+		method: 'GET',
+		headers: {
+			authorization: `Bearer ${await getNextAccessToken()}`,
+		},
+	});
+
+	if (!response.ok) return null;
+
 	let data = await response.json();
 
 	return data;
