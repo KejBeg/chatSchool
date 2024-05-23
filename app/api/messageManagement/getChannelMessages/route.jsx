@@ -1,9 +1,11 @@
 // Module Imports
 
 // Tool Imports
-import { getUserObjectBySub } from '/tools/privateTools';
+import { getUserObjectBySub, getAllUsers } from '/tools/privateTools';
 import { executeQuery } from '/tools/database.js';
 import { getUserObjectByToken } from '/tools/publicTools';
+
+import {} from '@auth0/nextjs-auth0';
 
 export async function POST(request) {
 	try {
@@ -29,14 +31,24 @@ export async function POST(request) {
 		);
 		messages = JSON.parse(messages);
 
+		let allUsers = await getAllUsers();
+
 		// Get the owner name for each message
-		messages = await Promise.all(
-			messages.map(async (message) => {
-				let ownerObject = await getUserObjectBySub(message.owner);
-				message.ownerName = ownerObject.name;
-				return message;
-			})
-		);
+		messages = messages.map((message) => {
+			let ownerObject = allUsers.find((user) => user.user_id === message.owner);
+			message.ownerName = ownerObject.name;
+			return message;
+		});
+
+		// messages = await Promise
+		// 	.all
+		// 	messages.map(async (message) => {
+		// 		let ownerObject = await getUserObjectBySub(message.owner);
+		// 		console.log(ownerObject);
+		// 		message.ownerName = ownerObject.name;
+		// 		return message;
+		// 	})
+		// 	();
 
 		return new Response(JSON.stringify(messages), { status: 200 });
 	} catch (error) {

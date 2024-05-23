@@ -11,17 +11,29 @@ import mainContext from '/contexts/mainContextProvider';
 export default function ChatWindow({ currentChannelID }) {
 	// State Variables
 	const [messageList, setMessageList] = useState([]);
-	const [refreshMessages, setRefreshMessages] = useState(true);
 
 	// Context Variables
 	const { userToken, socket, isConnected, transport } = useContext(mainContext);
+
+	// Socket useEffect
+	useEffect(() => {
+		// New message
+		if (!socket) return;
+		socket.on('messageSent', (messageObject) => {
+			let newMessageList = [...messageList];
+			messageObject.id = newMessageList.length + 1;
+			delete messageObject.currentChannelID;
+
+			newMessageList.push(messageObject);
+			setMessageList(newMessageList);
+		});
+	});
 
 	useEffect(() => {
 		// Getting the messages
 		(async () => {
 			// Only refresh messages if the refreshMessages state is true and userToken is present
-			if (!userToken || !refreshMessages) return;
-			console.log('refreshing messages');
+			if (!userToken) return;
 
 			const response = await fetch(`/api/messageManagement/getChannelMessages`, {
 				method: 'POST',
@@ -39,17 +51,8 @@ export default function ChatWindow({ currentChannelID }) {
 			let data = await response.json();
 
 			setMessageList(data);
-			setRefreshMessages(false);
 		})();
-
-		// Checking if messages need to be refreshed
-		if (!socket) return;
-		socket.on('refreshMessages', (channelID) => {
-			if (channelID === currentChannelID) {
-				setRefreshMessages(true);
-			}
-		});
-	});
+	}, [userToken]);
 
 	// Checking if the message list is present
 	if (messageList.length <= 0) {
@@ -59,9 +62,7 @@ export default function ChatWindow({ currentChannelID }) {
 
 	return (
 		<ul>
-			<li>Loading</li>
-			<li>{(isConnected && 'connect') || 'disconnect'}</li>
-			<li>{transport}</li>
+			<button onClick={() => console.log(messageList[messageList.length - 1].id)}>test</button>
 			{messageList.map((message) => (
 				<li key={message.id}>
 					{message.ownerName}:{message.message}

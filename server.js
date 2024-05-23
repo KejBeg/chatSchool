@@ -17,9 +17,9 @@ app.prepare().then(() => {
 
 	io.on('connection', (socket) => {
 		console.log('a user connected');
-		// socket.emit('test', 'test message');
-		socket.on('refreshMessages', (channelID) => {
-			socket.emit('refreshMessages', channelID);
+
+		socket.on('sendMessage', (messageObject) => {
+			socket.emit('messageSent', messageObject);
 		});
 	});
 
