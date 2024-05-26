@@ -6,6 +6,9 @@ import Link from 'next/link';
 // Tool Imports
 import myContext from '/contexts/mainContextProvider';
 
+// Style Imports
+import styles from '/public/styles/channelSelection.css';
+
 export default function ChannelSelection() {
 	// State Variables
 	const [refreshChannels, setRefreshChannels] = useState(false);
@@ -83,39 +86,51 @@ export default function ChannelSelection() {
 	};
 
 	return (
-		<>
-			<ul>
-				{channels.map((channel) => (
-					<li key={channel.id}>
-						{channel.owner === user.sub && (
-							<button onClick={(e) => deleteChannel(channel.id)}>X</button>
-						)}
-						<Link href={`/channels/${channel.id}`}>{channel.name}</Link>
-					</li>
-				))}
-				<li>
-					{(showCreateChannel && (
-						<form
-							onSubmit={(e) => createChannel(e)}
-							onKeyDown={(event) => {
-								if (event.key == 'Escape') {
-									setShowCreateChannel(false);
-									setChannelName('');
-								}
-							}}>
-							<label htmlFor="channelName">Channel Name</label>
-							<input
-								value={channelName}
-								onChange={(e) => setChannelName(e.target.value)}
-								type="text"
-								name="channelName"
+		<ul id="channel-list">
+			{channels.map((channel) => (
+				<li key={channel.id}>
+					<Link href={`/channels/${channel.id}`}>{channel.name}</Link>
+					{channel.owner === user.sub && (
+						<button onClick={(e) => deleteChannel(channel.id)}>
+							<img
+								src="/images/trash.svg"
+								alt="trash"
 							/>
-							<button type="submit">Create</button>
-						</form>
-					)) || <button onClick={(e) => setShowCreateChannel(true)}>+</button>}
+						</button>
+					)}
 				</li>
-			</ul>
-		</>
+			))}
+			<li>
+				{(showCreateChannel && (
+					<form
+						onSubmit={(e) => createChannel(e)}
+						onKeyDown={(event) => {
+							if (event.key == 'Escape') {
+								setShowCreateChannel(false);
+								setChannelName('');
+							}
+						}}>
+						<label htmlFor="channelName">Channel Name</label>
+						<input
+							value={channelName}
+							onChange={(e) => setChannelName(e.target.value)}
+							type="text"
+							name="channelName"
+						/>
+						<button type="submit">Create</button>
+					</form>
+				)) || (
+					<button
+						type="button"
+						onClick={(e) => setShowCreateChannel(true)}>
+						<img
+							src="/images/plus.svg"
+							alt="plus"
+						/>
+					</button>
+				)}
+			</li>
+		</ul>
 	);
 }
 
