@@ -12,6 +12,9 @@ import Navbar from '/components/navbar';
 import { getUserToken } from '/tools/publicTools';
 import { socketHandling, socket } from '/tools/socket';
 
+// Style Imports
+import '/public/styles/globals.css';
+
 export default function RootLayout({ children }) {
 	// State variables
 	const [contextVariables, setContextVariables] = useState(null);
@@ -34,7 +37,6 @@ export default function RootLayout({ children }) {
 			<UserProvider>
 				<myContext.Provider value={{ ...contextVariables }}>
 					<body>
-						<button onClick={() => console.log(contextVariables)}>test</button>
 						<Navbar />
 						{children}
 					</body>
