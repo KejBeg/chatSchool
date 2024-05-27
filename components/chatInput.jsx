@@ -50,14 +50,16 @@ export default function chatInput({ currentChannelID }) {
 	};
 
 	return (
-		<form onSubmit={(e) => handleSubmit(e)}>
-			<input
-				type="text"
-				value={message}
-				onChange={(e) => setMessage(e.target.value)}
-			/>
-			<button type="submit">Send</button>
-		</form>
+		<div id="chat-input-container">
+			<form onSubmit={(e) => handleSubmit(e)}>
+				<input
+					type="text"
+					value={message}
+					onChange={(e) => setMessage(e.target.value)}
+				/>
+				<button type="submit">Send</button>
+			</form>
+		</div>
 	);
 }
 
