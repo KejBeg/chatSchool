@@ -1,8 +1,8 @@
 {
-  "/page": "app/page.js",
   "/api/auth/[auth0]/route": "app/api/auth/[auth0]/route.js",
+  "/channels/[channel]/page": "app/channels/[channel]/page.js",
+  "/page": "app/page.js",
   "/api/auth/getUserToken/route": "app/api/auth/getUserToken/route.js",
   "/api/channelManagement/getUserChannels/route": "app/api/channelManagement/getUserChannels/route.js",
-  "/channels/[channel]/page": "app/channels/[channel]/page.js",
   "/api/messageManagement/getChannelMessages/route": "app/api/messageManagement/getChannelMessages/route.js"
 }
