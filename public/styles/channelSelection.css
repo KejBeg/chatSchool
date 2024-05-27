@@ -1,11 +1,14 @@
 #channel-list {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(20vw, 1fr));
-	gap: 1vh;
 	width: 100vw;
 	padding: 0;
 	margin: 0;
 	list-style: none;
+
+	& li:hover {
+		background-color: rgb(57, 58, 63);
+	}
 
 	li {
 		border: 1px solid black;
@@ -15,6 +18,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		margin: 1vh;
 
 		a {
 			display: flex;

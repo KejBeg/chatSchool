@@ -27,17 +27,17 @@ export default function chatInput({ currentChannelID }) {
 
 		// let created_at = new Date();
 		let created_at = new Date().toISOString().slice(0, 19).replace('T', ' ');
-		console.log(created_at);
 
 		// Emitting the message
-		if (user && socket)
+		if (user && socket) {
 			socket.emit('sendMessage', {
-				currentChannelID,
+				channelID: currentChannelID,
 				owner: user.sub,
 				ownerName: user.name,
 				message,
 				created_at,
 			});
+		}
 
 		let response = await fetch('/api/messageManagement/addMessage', {
 			method: 'POST',
@@ -57,7 +57,15 @@ export default function chatInput({ currentChannelID }) {
 					value={message}
 					onChange={(e) => setMessage(e.target.value)}
 				/>
-				<button type="submit">Send</button>
+				<button
+					hidden={!message}
+					type="submit">
+					<img
+						hidden={!message}
+						src="/images/send.svg"
+						alt="send"
+					/>
+				</button>
 			</form>
 		</div>
 	);
