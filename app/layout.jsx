@@ -10,24 +10,26 @@ import myContext from '/contexts/mainContextProvider.jsx';
 // Component Imports
 import Navbar from '/components/navbar';
 import { getUserToken } from '/tools/publicTools';
-import { socketHandling, socket } from '/tools/socket';
+import { socket } from '/tools/socket';
 
 // Style Imports
 import '/public/styles/globals.css';
 
 export default function RootLayout({ children }) {
 	// State variables
-	const [contextVariables, setContextVariables] = useState(null);
+	const [contextVariables, setContextVariables] = useState({});
 
+	// User Token useEffect
 	useEffect(() => {
 		(async () => {
 			// Get user token
-			let userToken = await getUserToken();
+			let userToken;
+			if (!contextVariables.userToken) userToken = await getUserToken();
 
 			setContextVariables({
 				...contextVariables,
 				userToken: userToken,
-				socket,
+				socket: socket,
 			});
 		})();
 	}, [socket]);
@@ -37,6 +39,12 @@ export default function RootLayout({ children }) {
 			<UserProvider>
 				<myContext.Provider value={{ ...contextVariables }}>
 					<body>
+						<button
+							onClick={() => {
+								console.log(contextVariables);
+							}}>
+							tst
+						</button>
 						<Navbar />
 						{children}
 					</body>

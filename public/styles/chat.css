@@ -13,7 +13,7 @@
 
 	& ul {
 		display: block;
-		width: 50%;
+		width: 80%;
 		height: 80%;
 		border: 3px solid #000;
 		border-radius: 5px;
@@ -33,13 +33,43 @@
 #chat-input-container {
 	display: flex;
 	width: 100vw;
-	height: fit-content;
+	height: 5vh;
 	justify-content: center;
 	align-items: center;
 
 	& form {
+		display: grid;
+		width: 50%;
+		height: 100%;
+		grid-template-columns: 4fr 1fr;
+
 		& input {
+			border-top-left-radius: 1vh;
+			border-bottom-left-radius: 1vh;
 			background-color: rgb(57, 58, 63);
+			padding: 1%;
+			font-size: medium;
+		}
+
+		& input:focus {
+			border: none;
+			outline: none;
+		}
+
+		& button {
+			display: flex;
+			/* width: 25%; */
+			height: 100%;
+			background-color: rgb(57, 58, 63);
+			justify-content: center;
+			align-items: center;
+			border-top-right-radius: 1vh;
+			border-bottom-right-radius: 1vh;
+
+			& img {
+				width: 3vh;
+				height: 3vh;
+			}
 		}
 	}
 }

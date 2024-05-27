@@ -26,6 +26,7 @@ export default function ChatWindow({ currentChannelID }) {
 		// New message
 		if (!socket) return;
 		socket.on('messageSent', (messageObject) => {
+			console.log(messageObject, currentChannelID);
 			if (messageObject.channelID != currentChannelID) return;
 
 			let newMessageList = [...messageList];

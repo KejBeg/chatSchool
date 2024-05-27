@@ -40,16 +40,6 @@ export async function POST(request) {
 			return message;
 		});
 
-		// messages = await Promise
-		// 	.all
-		// 	messages.map(async (message) => {
-		// 		let ownerObject = await getUserObjectBySub(message.owner);
-		// 		console.log(ownerObject);
-		// 		message.ownerName = ownerObject.name;
-		// 		return message;
-		// 	})
-		// 	();
-
 		return new Response(JSON.stringify(messages), { status: 200 });
 	} catch (error) {
 		console.log(error);

@@ -16,10 +16,9 @@ app.prepare().then(() => {
 	const io = new Server(httpServer);
 
 	io.on('connection', (socket) => {
-		console.log('a user connected');
-
 		socket.on('sendMessage', (messageObject) => {
 			socket.emit('messageSent', messageObject);
+			console.log('message sent');
 		});
 	});
 
