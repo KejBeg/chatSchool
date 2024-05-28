@@ -4,8 +4,9 @@
 import { useEffect, useState } from 'react';
 
 // Tool Imports
-import { UserProvider } from '@auth0/nextjs-auth0/client';
 import myContext from '/contexts/mainContextProvider.jsx';
+import { UserProvider } from '@auth0/nextjs-auth0/client';
+import { handleLogout } from '@auth0/nextjs-auth0';
 
 // Component Imports
 import Navbar from '/components/navbar';
@@ -26,6 +27,16 @@ export default function RootLayout({ children }) {
 			let userToken;
 			if (!contextVariables.userToken) userToken = await getUserToken();
 
+			// If user token is not found, log out
+			if (!userToken) {
+				fetch('/api/auth/logout', {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application',
+					},
+				});
+			}
+
 			setContextVariables({
 				...contextVariables,
 				userToken: userToken,
@@ -39,12 +50,6 @@ export default function RootLayout({ children }) {
 			<UserProvider>
 				<myContext.Provider value={{ ...contextVariables }}>
 					<body>
-						<button
-							onClick={() => {
-								console.log(contextVariables);
-							}}>
-							tst
-						</button>
 						<Navbar />
 						{children}
 					</body>

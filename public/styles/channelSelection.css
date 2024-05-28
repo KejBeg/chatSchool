@@ -7,7 +7,7 @@
 	list-style: none;
 
 	& li:hover {
-		background-color: rgb(57, 58, 63);
+		background-color: rgb(35, 36, 40);
 	}
 
 	li {
@@ -86,6 +86,13 @@
 				border: 1px solid #ccc;
 				border-radius: 4px;
 				background-color: rgb(57, 58, 63);
+				border: none;
+				outline: none;
+			}
+
+			& input:focus {
+				border: none;
+				outline: none;
 			}
 
 			& button {

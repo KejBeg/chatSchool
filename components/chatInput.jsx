@@ -9,7 +9,7 @@ import mainContext from '/contexts/mainContextProvider';
 
 // Component Imports
 
-export default function chatInput({ currentChannelID }) {
+export default function chatInput({ currentChannelID, messageState }) {
 	// State Variables
 	const [message, setMessage] = useState('');
 
@@ -49,10 +49,16 @@ export default function chatInput({ currentChannelID }) {
 		});
 	};
 
+	// If the messages are loading, return nothing
+	if (messageState == 'loading') {
+		return <></>;
+	}
+
 	return (
 		<div id="chat-input-container">
 			<form onSubmit={(e) => handleSubmit(e)}>
 				<input
+					autoFocus
 					type="text"
 					value={message}
 					onChange={(e) => setMessage(e.target.value)}
