@@ -13,18 +13,18 @@ export default function ChatWindow({ currentChannelID, messageList, messageState
 	// Ref Variables
 	const ulRef = useRef(null);
 
+	// Scrolls down only on the first load
+	useEffect(() => {
+		if (ulRef.current && messageState == 'loaded') {
+			ulRef.current.scrollTop = ulRef.current.scrollHeight;
+		}
+	}, []);
+
 	if (messageState == 'loading') {
 		return <LoadingMessages />;
 	} else if (messageState == 'noMessages') {
 		return <NoMessages />;
 	}
-
-	// Scrolls down only on the first load
-	// useEffect(() => {
-	// 	if (ulRef.current && messageState == 'loaded') {
-	// 		ulRef.current.scrollTop = ulRef.current.scrollHeight;
-	// 	}
-	// }, []);
 
 	return (
 		<div id="chat-window-list-container">
