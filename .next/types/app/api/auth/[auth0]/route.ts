@@ -1,4 +1,4 @@
-// File: /home/kejbeg/coding/chatSchool/app/api/auth/[auth0]/route.js
+// File: /home/kejbeg/coding/chatSchool/app/api/auth/[auth0]/route.jsx
 import * as entry from '../../../../../../app/api/auth/[auth0]/route.js'
 import type { NextRequest } from 'next/server.js'
 

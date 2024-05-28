@@ -1,16 +1,22 @@
 /*!********************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[3]!./public/styles/chat.css ***!
   \********************************************************************************************************************************************************************************************************************************************************************/
-#loding-messages {
+:root {
+	--chatInput-height: 5vh;
+	--chatWindow-height: 80vh;
+	--chatWindow-width: 100vw;
+}
+
+#loading {
 	display: block;
-	width: 90vw;
-	height: 90vh;
+	width: 100vw;
+	height: calc(100vh - var(--navbar-height));
 }
 
 #chat-window-list-container {
 	display: flex;
-	width: 100vw;
-	height: 80vh;
+	width: var(--chatWindow-width);
+	height: var(--chatWindow-height);
 	justify-content: center;
 	align-items: center;
 
@@ -32,13 +38,22 @@
 			height: -moz-fit-content;
 			height: fit-content;
 		}
+
+		& #loading {
+			display: flex;
+			width: 100%;
+			height: 100%;
+			justify-content: center;
+			align-items: center;
+			font-size: 1.5em;
+		}
 	}
 }
 
 #chat-input-container {
 	display: flex;
 	width: 100vw;
-	height: 5vh;
+	height: var(--chatInput-height);
 	justify-content: center;
 	align-items: center;
 

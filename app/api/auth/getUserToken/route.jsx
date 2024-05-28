@@ -8,6 +8,7 @@ export async function POST(request) {
 		const { accessToken } = await getAccessToken(request);
 		return Response.json({ userToken: accessToken });
 	} catch (error) {
+		console.log(error);
 		return Response.json({ message: 'Bad Request' }, { status: 400 });
 	}
 }

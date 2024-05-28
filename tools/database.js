@@ -35,6 +35,7 @@ export async function executeQuery(query, values = []) {
 			if (error) {
 				console.log(`Error executing query: ${query}`);
 				console.log(error);
+				console.log(`result : ${result}`);
 				reject(error);
 			} else {
 				resolve(JSON.stringify(result));

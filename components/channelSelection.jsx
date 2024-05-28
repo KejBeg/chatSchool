@@ -112,6 +112,7 @@ export default function ChannelSelection() {
 						}}>
 						<label htmlFor="channelName">Channel Name</label>
 						<input
+							autoFocus
 							value={channelName}
 							onChange={(e) => setChannelName(e.target.value)}
 							type="text"

@@ -1,4 +1,14 @@
 export default function LoadingMessages() {
-	return <div id="loading-messages">Loading</div>;
+	return (
+		<div id="chat-window-list-container">
+			<ul>
+				<li
+					key="loading"
+					id="loading">
+					<span id="loading">Loading Messages</span>
+				</li>
+			</ul>
+		</div>
+	);
 }
 
