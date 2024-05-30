@@ -11,7 +11,7 @@ export async function POST(request) {
 		const userObject = await getUserObjectByToken(authorization);
 		const message = requestBody.message;
 		const channelID = requestBody.channelID;
-		const created_at = requestBody.created_at;
+		const creation_datetime = requestBody.creation_datetime;
 
 		// Check if the message is provided
 		if (!message) {
@@ -24,12 +24,10 @@ export async function POST(request) {
 		}
 
 		// Saving the message to the database
-		executeQuery(`INSERT INTO messages (message, owner, created_at, channel) VALUES (?, ?, ?, ?)`, [
-			message,
-			userObject.sub,
-			created_at,
-			channelID,
-		]);
+		executeQuery(
+			`INSERT INTO messages (message, owner, creation_datetime, channel) VALUES (?, ?, ?, ?)`,
+			[message, userObject.sub, creation_datetime, channelID]
+		);
 
 		return new Response('Message sent', { status: 200 });
 	} catch (error) {

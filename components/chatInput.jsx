@@ -25,8 +25,8 @@ export default function chatInput({ currentChannelID, messageState }) {
 		// Resetting the message
 		setMessage('');
 
-		// let created_at = new Date();
-		let created_at = new Date().toISOString().slice(0, 19).replace('T', ' ');
+		// let creation_datetime = new Date();
+		let creation_datetime = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
 		// Emitting the message
 		if (user && socket) {
@@ -35,7 +35,7 @@ export default function chatInput({ currentChannelID, messageState }) {
 				owner: user.sub,
 				ownerName: user.name,
 				message,
-				created_at,
+				creation_datetime,
 			});
 		}
 
@@ -45,7 +45,7 @@ export default function chatInput({ currentChannelID, messageState }) {
 				authorization: userToken,
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ message, channelID: currentChannelID, created_at }),
+			body: JSON.stringify({ message, channelID: currentChannelID, creation_datetime }),
 		});
 	};
 

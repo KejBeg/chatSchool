@@ -25,7 +25,7 @@ export async function POST(request) {
 
 		// Create a new channel
 		executeQuery(
-			`INSERT INTO channels (name, owner, created_at, users) VALUES (?, ?, CURRENT_TIMESTAMP, JSON_ARRAY(?))`,
+			`INSERT INTO channels (name, owner, creation_datetime, users) VALUES (?, ?, CURRENT_TIMESTAMP, JSON_ARRAY(?))`,
 			[channelName, userObject.sub, userObject.sub]
 		);
 

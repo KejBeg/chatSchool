@@ -30,7 +30,8 @@ export default function ChatWindow({ currentChannelID, messageList, messageState
 		<div id="chat-window-list-container">
 			<ul ref={ulRef}>
 				{messageList.map((message) => (
-					<li key={message.id}>
+					<li
+						key={`${message.currentChannelID} ${message.ownerName}-${message.message}-${message.creation_datetime}`}>
 						<span className="message-ownerName">{message.ownerName}</span>:
 						<span className="message-text">{message.message}</span>
 					</li>

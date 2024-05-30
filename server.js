@@ -1,6 +1,7 @@
 import { createServer } from 'node:http';
 import next from 'next';
 import { Server } from 'socket.io';
+import { setupDatabase } from './tools/database.js';
 
 const dev = process.env.NODE_ENV !== 'production';
 const hostname = process.env.HOST || 'localhost';
@@ -14,6 +15,9 @@ app.prepare().then(() => {
 	const httpServer = createServer(handler);
 
 	const io = new Server(httpServer);
+
+	// Setup the database
+	setupDatabase();
 
 	io.on('connection', (socket) => {
 		socket.on('sendMessage', (messageObject) => {

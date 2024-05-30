@@ -32,8 +32,6 @@ export default function Page({ params }) {
 			if (messageObject.channelID != currentChannelID) return;
 
 			let newMessageList = [...messageList];
-			messageObject.id = newMessageList.length + 1;
-			delete messageObject.currentChannelID;
 
 			newMessageList.push(messageObject);
 			setMessageList(newMessageList);

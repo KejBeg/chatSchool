@@ -1,6 +1,7 @@
 // Imports
-const db = require('mysql');
-require('dotenv').config();
+import db from 'mysql';
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Create a connection to the database
 const con = db.createConnection({
@@ -45,16 +46,39 @@ export async function executeQuery(query, values = []) {
 }
 
 // Setup the database
-function setupDatabase() {
-	const createChannelsTable =
-		'CREATE TABLE IF NOT EXISTS channels (id INT PRIMARY KEY AUTO_INCREMENT, name TEXT, owner TEXT, users JSON, created_at DATETIME);';
-	const createMessagesTable = `CREATE TABLE IF NOT EXISTS messages(id INT PRIMARY KEY AUTO_INCREMENT, message TEXT, channel INT, owner TEXT, created_at DATETIME, FOREIGN KEY(channel) REFERENCES channels(id))`;
+export async function setupDatabase() {
+	try {
+		const createChannelsTable = `
+		CREATE TABLE IF NOT EXISTS channels
+		(
+			id INT PRIMARY KEY AUTO_INCREMENT,
+			name TEXT,
+			owner TEXT,
+			users JSON,
+			creation_datetime DATETIME,
+			invite BINARY(16) DEFAULT (UUID_TO_BIN(UUID())),
+			invite_expiration_datetime DATETIME DEFAULT (CURRENT_TIMESTAMP + INTERVAL 1 DAY)
+		);`;
 
-	// Execute the queries
-	executeQuery(createChannelsTable);
-	executeQuery(createMessagesTable);
+		const createMessagesTable = `
+		CREATE TABLE IF NOT EXISTS messages
+		(
+			id INT PRIMARY KEY AUTO_INCREMENT,
+			message TEXT,
+			channel INT,
+			owner TEXT,
+			creation_datetime DATETIME,
+			FOREIGN KEY(channel) REFERENCES channels(id)
+		);`;
+
+		// Execute the queries
+		await executeQuery(createChannelsTable);
+		await executeQuery(createMessagesTable);
+
+		console.log('Database Setup Complete');
+	} catch (error) {
+		console.log('Database Setup Failed');
+		throw error;
+	}
 }
-
-// Call the setupDatabase function to create the tables
-setupDatabase();
 
