@@ -1,7 +1,7 @@
 // Module Imports
 import Link from 'next/link';
 
-export default function ChannelList({ channels, setRefreshChannels, user }) {
+export default function ChannelList({ channels, user, userToken }) {
 	const deleteChannel = async (channelID) => {
 		// Check if user token is available
 		if (!userToken) return;
