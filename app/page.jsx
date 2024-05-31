@@ -64,6 +64,7 @@ export default function Page() {
 			<ChannelList
 				channels={channels}
 				user={user}
+				userToken={userToken}
 			/>
 			<ChannelCreation
 				refreshChannels={refreshChannels}
