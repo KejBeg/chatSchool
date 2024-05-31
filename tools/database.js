@@ -4,13 +4,21 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // Create a connection to the database
-const con = db.createConnection({
-	host: process.env.DB_HOST,
-	port: process.env.DB_PORT,
-	user: process.env.DB_USER,
-	password: process.env.DB_PASSWORD,
-	database: process.env.DB_DATABASE,
-});
+let con;
+try {
+	con = db.createConnection({
+		host: process.env.DB_HOST,
+		port: process.env.DB_PORT,
+		user: process.env.DB_USER,
+		password: process.env.DB_PASSWORD,
+		database: process.env.DB_DATABASE,
+		// TODO Remove insecureAuth and use a secure connection
+		insecureAuth: true,
+	});
+} catch (error) {
+	console.log('Database Connection Failed');
+	throw error;
+}
 
 // Connect to the database
 function connectDatabase() {
