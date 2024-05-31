@@ -21,6 +21,7 @@ export async function GET(request) {
 
 		return new Response(channels, { status: 200 });
 	} catch (error) {
+		console.log(error);
 		return new Response('An error occurred', { status: 500 });
 	}
 }

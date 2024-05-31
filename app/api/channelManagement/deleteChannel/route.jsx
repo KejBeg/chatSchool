@@ -35,6 +35,7 @@ export async function DELETE(request) {
 		console.log('after delete');
 		return new Response('Channel deleted', { status: 200 });
 	} catch (error) {
+		console.log(error);
 		return new Response('An error occurred', { status: 500 });
 	}
 }
