@@ -4,7 +4,7 @@
  */
 export async function getUserToken() {
 	// Fetch user token
-	let response = await fetch(`http://localhost:3000/api/auth/getUserToken`, {
+	let response = await fetch(`/api/auth/getUserToken`, {
 		method: 'POST',
 	});
 

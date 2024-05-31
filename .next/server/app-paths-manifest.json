@@ -1,5 +1,5 @@
 {
   "/page": "app/page.js",
   "/channels/[channel]/page": "app/channels/[channel]/page.js",
-  "/api/messageManagement/getChannelMessages/route": "app/api/messageManagement/getChannelMessages/route.js"
+  "/api/auth/getUserToken/route": "app/api/auth/getUserToken/route.js"
 }
