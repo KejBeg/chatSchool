@@ -1,8 +1,1 @@
-{
-  "/channels/[channel]/page": "app/channels/[channel]/page.js",
-  "/page": "app/page.js",
-  "/api/channelManagement/getChannelInvite/route": "app/api/channelManagement/getChannelInvite/route.js",
-  "/invite/[invite]/page": "app/invite/[invite]/page.js",
-  "/api/messageManagement/getChannelMessages/route": "app/api/messageManagement/getChannelMessages/route.js",
-  "/api/messageManagement/addMessage/route": "app/api/messageManagement/addMessage/route.js"
-}
+{}
