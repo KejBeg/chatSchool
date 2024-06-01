@@ -25,10 +25,20 @@ export async function POST(request) {
 		}
 
 		// Getting all messages for the channel
-		let messages = await executeQuery(
-			`SELECT * FROM messages WHERE channel = ? ORDER BY creation_datetime ASC`,
-			[channelID]
-		);
+		let messages;
+		// If the channel is the global channel (meaning the ID is 1), get all messages
+		if (channelID == 1) {
+			messages = await executeQuery(
+				`SELECT * FROM messages WHERE channel = ? ORDER BY creation_datetime ASC`,
+				[channelID]
+			);
+		} else {
+			messages = await executeQuery(
+				`SELECT * FROM messages WHERE  (channel = ? AND JSON_CONTAINS(users, ?)) ORDER BY creation_datetime ASC`,
+				[channelID, userObject.sub]
+			);
+		}
+
 		messages = JSON.parse(messages);
 
 		let allUsers = await getAllUsers();
@@ -40,6 +50,7 @@ export async function POST(request) {
 			return message;
 		});
 
+		console.log(messages);
 		return new Response(JSON.stringify(messages), { status: 200 });
 	} catch (error) {
 		console.log(error);

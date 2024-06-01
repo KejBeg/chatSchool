@@ -15,9 +15,10 @@ export async function GET(request) {
 		}
 
 		// Get user channels by user sub
-		const channels = await executeQuery(`SELECT * FROM channels WHERE JSON_CONTAINS(users, ?)`, [
-			JSON.stringify(userObject.sub),
-		]);
+		const channels = await executeQuery(
+			`SELECT * FROM channels WHERE JSON_CONTAINS(users, ?) OR name = 'Global'`,
+			[JSON.stringify(userObject.sub)]
+		);
 
 		return new Response(channels, { status: 200 });
 	} catch (error) {

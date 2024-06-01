@@ -18,6 +18,14 @@ export async function POST(request) {
 			return new Response('Channel name is required', { status: 400 });
 		}
 
+		if (channelName.length > 50) {
+			return new Response('Channel name is too long', { status: 400 });
+		}
+
+		if (channelName == 'Global') {
+			return new Response('Channel name is reserved', { status: 400 });
+		}
+
 		// Check if authorization or userObject is null
 		if (!authorization || !userObject) {
 			return new Response('Unauthorized', { status: 401 });
