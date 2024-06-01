@@ -1,7 +1,7 @@
 // Module Imports
 import Link from 'next/link';
 
-export default function ChannelList({ channels, user, userToken }) {
+export default function ChannelPage({ channels, user, userToken }) {
 	const deleteChannel = async (channelID) => {
 		// Check if user token is available
 		if (!userToken) return;
@@ -42,6 +42,7 @@ export default function ChannelList({ channels, user, userToken }) {
 
 		navigator.clipboard.writeText(url);
 	};
+
 	return (
 		<>
 			{channels.map((channel) => (

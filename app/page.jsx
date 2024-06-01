@@ -13,8 +13,8 @@ import styles from '/public/styles/channelSelection.css';
 
 // Component Imports
 import LoadingChannels from '/components/loadingChannels.jsx';
-import ChannelList from '/components/channelList.jsx';
-import ChannelCreation from '/components/channelCreation.jsx';
+import ChannelPage from '/components/channelPage.jsx';
+import ChannelPageCreation from '/components/channelPageCreation.jsx';
 
 export default function Page() {
 	// State Variables
@@ -49,6 +49,12 @@ export default function Page() {
 			}
 
 			let data = await response.json();
+
+			if (data.length === 0) {
+				setChannelsState('noChannels');
+				return;
+			}
+
 			setChannels(data);
 			setChannelsState('loaded');
 		})();
@@ -59,14 +65,18 @@ export default function Page() {
 		return <LoadingChannels />;
 	}
 
+	if (channelsState == 'noChannels' || channelsState == 'error') {
+		return <div>Error loading channels</div>;
+	}
+
 	return (
 		<ul id="channel-list">
-			<ChannelList
+			<ChannelPage
 				channels={channels}
 				user={user}
 				userToken={userToken}
 			/>
-			<ChannelCreation
+			<ChannelPageCreation
 				refreshChannels={refreshChannels}
 				setRefreshChannels={setRefreshChannels}
 				userToken={userToken}

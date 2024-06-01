@@ -79,9 +79,15 @@ export async function setupDatabase() {
 			FOREIGN KEY(channel) REFERENCES channels(id)
 		);`;
 
+		const createGlobalChannel = `
+			INSERT IGNORE INTO channels (id, name, owner, users, creation_datetime)
+			VALUES (1, 'Global', 'System', '[]', CURRENT_TIMESTAMP);
+		`;
+
 		// Execute the queries
 		await executeQuery(createChannelsTable);
 		await executeQuery(createMessagesTable);
+		await executeQuery(createGlobalChannel);
 
 		console.log('Database Setup Complete');
 	} catch (error) {
