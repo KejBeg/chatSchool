@@ -26,15 +26,18 @@ app.prepare().then(() => {
 		});
 	});
 
-	const io = new Server(httpServer);
+	const io = new Server(httpServer, {
+		cors: {
+			origin: '*',
+		},
+	});
 
 	// Setup the database
 	setupDatabase();
 
 	io.on('connection', (socket) => {
 		socket.on('sendMessage', (messageObject) => {
-			socket.emit('messageSent', messageObject);
-			console.log('message sent');
+			io.emit('messageSent', messageObject);
 		});
 	});
 
