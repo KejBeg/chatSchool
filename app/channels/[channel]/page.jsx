@@ -28,6 +28,7 @@ export default function Page({ params }) {
 	useEffect(() => {
 		// New message handling
 		if (!socket) return;
+		console.log('New message received');
 		socket.on('messageSent', (messageObject) => {
 			if (messageObject.channelID != currentChannelID) return;
 
