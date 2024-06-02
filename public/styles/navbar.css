@@ -1,5 +1,6 @@
 :root {
 	--navbar-height: 6vh;
+	--navbar-border: 3px;
 }
 
 #navbar {
@@ -7,7 +8,7 @@
 	background-color: rgb(35, 36, 40);
 	height: var(--navbar-height);
 	width: 100vw;
-	border-bottom: 3px solid black;
+	border-bottom: var(--navbar-border) solid black;
 
 	& ul {
 		display: flex;

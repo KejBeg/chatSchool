@@ -24,17 +24,27 @@ export async function POST(request) {
 			return new Response('Unauthorized', { status: 401 });
 		}
 
-		// Getting all messages for the channel
-		let messages;
 		// If the channel is the global channel (meaning the ID is 1), get all messages
+		let messages;
 		if (channelID == 1) {
 			messages = await executeQuery(
 				`SELECT * FROM messages WHERE channel = ? ORDER BY creation_datetime ASC`,
 				[channelID]
 			);
 		} else {
+			// Check if the user is in the channel
+			let channelUsers = await executeQuery(
+				`SELECT users FROM channels WHERE id = ? AND JSON_CONTAINS(users, ?)`,
+				[channelID, JSON.stringify(userObject.sub)]
+			);
+			channelUsers = JSON.parse(channelUsers);
+
+			if (channelUsers.length == 0 || !channelUsers) {
+				return new Response('Unauthorized', { status: 401 });
+			}
+
 			messages = await executeQuery(
-				`SELECT * FROM messages WHERE  (channel = ? AND JSON_CONTAINS(users, ?)) ORDER BY creation_datetime ASC`,
+				`SELECT * FROM messages WHERE  channel = ? ORDER BY creation_datetime ASC`,
 				[channelID, userObject.sub]
 			);
 		}
@@ -50,7 +60,6 @@ export async function POST(request) {
 			return message;
 		});
 
-		console.log(messages);
 		return new Response(JSON.stringify(messages), { status: 200 });
 	} catch (error) {
 		console.log(error);
