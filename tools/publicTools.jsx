@@ -37,7 +37,6 @@ export async function getUserObjectByToken(userToken) {
 		let data = await response.json();
 		return data;
 	} catch (error) {
-		console.log(error);
 		return null;
 	}
 }

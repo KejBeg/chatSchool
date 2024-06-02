@@ -1,70 +1,89 @@
+'use client';
+
 // Module Imports
+import { useContext, useEffect, useState } from 'react';
+import { useUser } from '@auth0/nextjs-auth0/client';
 import Link from 'next/link';
 
-export default function ChannelPage({ channels, user, userToken }) {
-	const deleteChannel = async (channelID) => {
-		// Check if user token is available
-		if (!userToken) return;
+// Tool Imports
+import myContext from '/contexts/mainContextProvider';
 
-		// Delete the channel
-		let response = await fetch('/api/channelManagement/deleteChannel', {
-			method: 'DELETE',
-			headers: {
-				authorization: userToken,
-			},
-			body: JSON.stringify({ channelID }),
-		});
+// Style Imports
+import style from '/public/styles/channelPage.css';
 
-		// Refresh the channels
-		setRefreshChannels(!refreshChannels);
-	};
+// Component Imports
+import LoadingChannels from '/components/loadingChannels.jsx';
+import ChannelList from '/components/channelList.jsx';
+import ChannelCreation from '/components/channelCreation.jsx';
 
-	const copyChannelInvite = async (channelID) => {
-		// Check if user token is available
-		if (!userToken) return;
+export default function ChannelPage() {
+	// State Variables
+	const [refreshChannels, setRefreshChannels] = useState(false);
+	const [channels, setChannels] = useState([]);
+	const [channelsState, setChannelsState] = useState('loading');
 
-		// Copy the channel invite
-		let response = await fetch('/api/channelManagement/getChannelInvite', {
-			method: 'POST',
-			headers: {
-				authorization: userToken,
-			},
-			body: JSON.stringify({ channelID }),
-		});
+	// Context Variables
+	const { userToken } = useContext(myContext);
 
-		if (!response.ok) {
-			return;
-		}
+	// Auth0 Variables
+	const { user, isLoading, error } = useUser();
 
-		let data = await response.json();
-		let invite = data.invite;
-		let url = window.location.origin + '/invite/' + invite;
+	useEffect(() => {
+		// Fetch user channels
+		(async () => {
+			// Check if user token is available
+			if (!userToken) return;
 
-		navigator.clipboard.writeText(url);
-	};
+			// Fetch user channels
+			let response = await fetch('/api/channelManagement/getUserChannels', {
+				method: 'GET',
+				headers: {
+					authorization: userToken,
+				},
+			});
+
+			// Check if response is ok
+			if (!response.ok) {
+				setChannelsState('error');
+				return;
+			}
+
+			let data = await response.json();
+
+			if (data.length === 0) {
+				setChannelsState('noChannels');
+				return;
+			}
+
+			setChannels(data);
+			setChannelsState('loaded');
+		})();
+	}, [userToken, refreshChannels]);
+
+	// Handling error states
+	if (channelsState == 'loading') {
+		return <LoadingChannels />;
+	}
+
+	if (channelsState == 'noChannels' || channelsState == 'error') {
+		return <div>Error loading channels</div>;
+	}
 
 	return (
-		<>
-			{channels.map((channel) => (
-				<li key={channel.id}>
-					<Link href={`/channels/${channel.id}`}>{channel.name}</Link>
-					<button onClick={(e) => copyChannelInvite(channel.id)}>
-						<img
-							src="/images/copy.svg"
-							alt="copy"
-						/>
-					</button>
-					{channel.owner === user.sub && (
-						<button onClick={(e) => deleteChannel(channel.id)}>
-							<img
-								src="/images/trash.svg"
-								alt="trash"
-							/>
-						</button>
-					)}
-				</li>
-			))}
-		</>
+		<ul id="channel-page">
+			<ChannelList
+				setRefreshChannels={setRefreshChannels}
+				refreshChannels={refreshChannels}
+				channels={channels}
+				user={user}
+				userToken={userToken}
+			/>
+			<ChannelCreation
+				refreshChannels={refreshChannels}
+				setRefreshChannels={setRefreshChannels}
+				userToken={userToken}
+			/>
+		</ul>
 	);
 }
 

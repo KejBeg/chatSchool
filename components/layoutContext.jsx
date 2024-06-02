@@ -17,8 +17,7 @@ export default function LayoutContext({ children }) {
 	useEffect(() => {
 		(async () => {
 			// Get user token
-			let userToken;
-			if (!contextVariables.userToken) userToken = await getUserToken();
+			let userToken = await getUserToken();
 
 			// If user token is not found, log out
 			if (!userToken && user) {
@@ -37,12 +36,12 @@ export default function LayoutContext({ children }) {
 				socket: socket,
 			});
 		})();
-	}, [socket]);
+	}, [socket, user]);
 
 	return (
 		<myContext.Provider value={{ ...contextVariables }}>
 			<Navbar />
-			{children}
+			<main>{children}</main>
 		</myContext.Provider>
 	);
 }

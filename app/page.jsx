@@ -9,12 +9,12 @@ import Link from 'next/link';
 import myContext from '/contexts/mainContextProvider';
 
 // Style Imports
-import styles from '/public/styles/channelSelection.css';
+import styles from '/public/styles/channelSelectionPage.css';
 
 // Component Imports
 import LoadingChannels from '/components/loadingChannels.jsx';
-import ChannelPage from '/components/channelPage.jsx';
-import ChannelPageCreation from '/components/channelPageCreation.jsx';
+import ChannelList from '/components/channelList.jsx';
+import ChannelCreation from '/components/channelCreation.jsx';
 
 export default function Page() {
 	// State Variables
@@ -71,12 +71,12 @@ export default function Page() {
 
 	return (
 		<ul id="channel-list">
-			<ChannelPage
+			<ChannelList
 				channels={channels}
 				user={user}
 				userToken={userToken}
 			/>
-			<ChannelPageCreation
+			<ChannelCreation
 				refreshChannels={refreshChannels}
 				setRefreshChannels={setRefreshChannels}
 				userToken={userToken}
