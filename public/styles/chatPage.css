@@ -18,7 +18,7 @@
 		& ul {
 			display: block;
 			width: 80%;
-			height: 80%;
+			height: calc(80vh - var(--navbar-height));
 			border: 3px solid #000;
 			border-radius: 5px;
 			padding: 1%;
