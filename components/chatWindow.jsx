@@ -1,7 +1,7 @@
 'use client';
 
 // Module Imports
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 // Tool Imports
 
@@ -9,15 +9,21 @@ import { useRef, useEffect } from 'react';
 import ChatError from '/components/chatError';
 
 export default function ChatWindow({ currentChannelID, messageList, messageState }) {
+	// State Variables
+	const [amountOfLoads, setAmountOfLoads] = useState(0);
+
 	// Ref Variables
 	const ulRef = useRef(null);
 
 	// Scrolls down only on the first load
 	useEffect(() => {
-		if (ulRef.current && messageState == 'loaded') {
-			ulRef.current.scrollTop = ulRef.current.scrollHeight;
-		}
-	}, []);
+		if (!ulRef.current || messageState != 'loaded') return;
+
+		// if (ulRef.current.scrollTop == ulRef.current.scrollHeight || amountOfLoads == 0) {
+		ulRef.current.scrollTop = ulRef.current.scrollHeight;
+		// }
+		setAmountOfLoads(amountOfLoads + 1);
+	}, [messageList]);
 
 	if (messageState == 'loading') {
 		return <ChatError message={'Loading messages...'} />;
