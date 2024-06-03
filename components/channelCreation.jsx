@@ -55,6 +55,7 @@ export default function ChannelPageCreation({ refreshChannels, setRefreshChannel
 			)) || (
 				<button
 					type="button"
+					id="create-channel"
 					onClick={(e) => setShowCreateChannel(true)}>
 					<img
 						src="/images/plus.svg"

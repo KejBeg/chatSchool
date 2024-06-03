@@ -12,11 +12,12 @@ import myContext from '/contexts/mainContextProvider';
 import style from '/public/styles/channelPage.css';
 
 // Component Imports
-import LoadingChannels from '/components/loadingChannels.jsx';
 import ChannelList from '/components/channelList.jsx';
 import ChannelCreation from '/components/channelCreation.jsx';
 
-export default function ChannelPage() {
+export default function ChannelPage({ params }) {
+	let currentChannelID = params.channel;
+
 	// State Variables
 	const [refreshChannels, setRefreshChannels] = useState(false);
 	const [channels, setChannels] = useState([]);
@@ -60,23 +61,16 @@ export default function ChannelPage() {
 		})();
 	}, [userToken, refreshChannels]);
 
-	// Handling error states
-	if (channelsState == 'loading') {
-		return <LoadingChannels />;
-	}
-
-	if (channelsState == 'noChannels' || channelsState == 'error') {
-		return <div>Error loading channels</div>;
-	}
-
 	return (
 		<ul id="channel-page">
 			<ChannelList
+				currentChannelID={currentChannelID}
 				setRefreshChannels={setRefreshChannels}
 				refreshChannels={refreshChannels}
 				channels={channels}
 				user={user}
 				userToken={userToken}
+				channelsState={channelsState}
 			/>
 			<ChannelCreation
 				refreshChannels={refreshChannels}

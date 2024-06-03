@@ -12,7 +12,6 @@ import myContext from '/contexts/mainContextProvider';
 import styles from '/public/styles/channelSelectionPage.css';
 
 // Component Imports
-import LoadingChannels from '/components/loadingChannels.jsx';
 import ChannelList from '/components/channelList.jsx';
 import ChannelCreation from '/components/channelCreation.jsx';
 
@@ -60,27 +59,21 @@ export default function Page() {
 		})();
 	}, [userToken, refreshChannels]);
 
-	// Handling error states
-	if (channelsState == 'loading') {
-		return <LoadingChannels />;
-	}
-
-	if (channelsState == 'noChannels' || channelsState == 'error') {
-		return <div>Error loading channels</div>;
-	}
-
 	return (
 		<ul id="channel-list">
 			<ChannelList
 				channels={channels}
 				user={user}
 				userToken={userToken}
+				channelsState={channelsState}
 			/>
-			<ChannelCreation
-				refreshChannels={refreshChannels}
-				setRefreshChannels={setRefreshChannels}
-				userToken={userToken}
-			/>
+			{(channelsState == 'loaded' || channelsState == 'noChannels') && (
+				<ChannelCreation
+					refreshChannels={refreshChannels}
+					setRefreshChannels={setRefreshChannels}
+					userToken={userToken}
+				/>
+			)}
 		</ul>
 	);
 }

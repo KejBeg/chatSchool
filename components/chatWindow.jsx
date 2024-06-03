@@ -6,8 +6,7 @@ import { useRef, useEffect } from 'react';
 // Tool Imports
 
 // Component Imports
-import LoadingMessages from '/components/loadingMessages';
-import NoMessages from './noMessages';
+import ChatError from '/components/chatError';
 
 export default function ChatWindow({ currentChannelID, messageList, messageState }) {
 	// Ref Variables
@@ -21,9 +20,11 @@ export default function ChatWindow({ currentChannelID, messageList, messageState
 	}, []);
 
 	if (messageState == 'loading') {
-		return <LoadingMessages />;
+		return <ChatError message={'Loading messages...'} />;
 	} else if (messageState == 'noMessages') {
-		return <NoMessages />;
+		return <ChatError message={'No messages have been sent yet, be the first one'} />;
+	} else if (messageState == 'error') {
+		return <ChatError message={'There was an error loading messages, please try reloading'} />;
 	}
 
 	return (

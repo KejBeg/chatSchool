@@ -1,7 +1,5 @@
 'use client';
 
-// Module Imports
-
 // Tool Imports
 
 // Style Imports
@@ -13,11 +11,9 @@ import ChatPage from '/components/chatPage';
 import UsersPage from '/components/usersPage';
 
 export default function Page({ params }) {
-	const currentChannelID = params.channel;
-
 	return (
 		<>
-			<ChannelPage />
+			<ChannelPage params={params} />
 			<ChatPage params={params} />
 			<UsersPage params={params} />
 		</>
