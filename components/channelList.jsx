@@ -69,14 +69,18 @@ export default function ChannelPage({
 					key={channel.id}
 					id={(channel.id == currentChannelID && 'active-channel') || ''}>
 					<Link href={`/channels/${channel.id}`}>{channel.name}</Link>
-					<button onClick={(e) => copyChannelInvite(channel.id)}>
+					<button
+						type="button"
+						onClick={(e) => copyChannelInvite(channel.id)}>
 						<img
 							src="/images/copy.svg"
 							alt="copy"
 						/>
 					</button>
 					{channel.owner === user.sub && (
-						<button onClick={(e) => deleteChannel(channel.id)}>
+						<button
+							type="button"
+							onClick={(e) => deleteChannel(channel.id)}>
 							<img
 								src="/images/trash.svg"
 								alt="trash"
