@@ -55,7 +55,7 @@
 			}
 		}
 
-		button:hover:not(:last-child) {
+		button:hover:not(#create-channel) {
 			transform: scale(1.75);
 			transition: transform 0.3s ease-in-out;
 		}
@@ -132,6 +132,10 @@
 				padding: 0.5em 1em;
 			}
 		}
+	}
+
+	#active-channel {
+		background-color: rgb(35, 36, 40);
 	}
 }
 

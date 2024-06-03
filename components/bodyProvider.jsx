@@ -1,6 +1,9 @@
+'use client';
+
 // Module Imports
 import { useEffect, useState } from 'react';
 import { useUser } from '@auth0/nextjs-auth0/client';
+import Head from 'next/head';
 
 // Tool Imports
 import myContext from '/contexts/mainContextProvider.jsx';
@@ -10,7 +13,7 @@ import { socket } from '/tools/socket';
 // Component Imports
 import Navbar from '/components/navbar';
 
-export default function LayoutContext({ children }) {
+export default function BodyProvider({ children }) {
 	const [contextVariables, setContextVariables] = useState({});
 	const { user } = useUser();
 
@@ -41,7 +44,12 @@ export default function LayoutContext({ children }) {
 	return (
 		<myContext.Provider value={{ ...contextVariables }}>
 			<Navbar />
-			<main>{children}</main>
+			<main>
+				<Head>
+					<title>My page title</title>
+				</Head>
+				{children}
+			</main>
 		</myContext.Provider>
 	);
 }

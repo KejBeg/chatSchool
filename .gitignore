@@ -1,6 +1,7 @@
 # Node modules
 /node_modules
 /.next
+/.idea
 
 # dotenv environment variables file
 .env

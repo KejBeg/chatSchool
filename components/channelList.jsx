@@ -1,12 +1,17 @@
 // Module Imports
 import Link from 'next/link';
 
+// Component Imports
+import ChannelsError from '/components/channelsError';
+
 export default function ChannelPage({
+	channelsState,
 	setRefreshChannels,
 	refreshChannels,
 	channels,
 	user,
 	userToken,
+	currentChannelID,
 }) {
 	const deleteChannel = async (channelID) => {
 		// Check if user token is available
@@ -49,10 +54,20 @@ export default function ChannelPage({
 		navigator.clipboard.writeText(url);
 	};
 
+	if (channelsState === 'loading') {
+		return <ChannelsError message="Loading Channels..." />;
+	} else if (channelsState === 'error') {
+		return <ChannelsError message="Error Loading Channels" />;
+	} else if (channelsState === 'noChannels') {
+		return <ChannelsError message="No Channels Found" />;
+	}
+
 	return (
 		<>
 			{channels.map((channel) => (
-				<li key={channel.id}>
+				<li
+					key={channel.id}
+					id={(channel.id == currentChannelID && 'active-channel') || ''}>
 					<Link href={`/channels/${channel.id}`}>{channel.name}</Link>
 					<button onClick={(e) => copyChannelInvite(channel.id)}>
 						<img

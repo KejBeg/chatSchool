@@ -54,7 +54,10 @@ export default function ChatPage({ params }) {
 			});
 
 			// Check if the response is ok
-			if (!response.ok) return;
+			if (!response.ok) {
+				setMessageState('error');
+				return;
+			}
 
 			// Getting data from response
 			let data = await response.json();

@@ -8,10 +8,14 @@ import myContext from '/contexts/mainContextProvider';
 /// Style Imports
 import style from '/public/styles/usersPage.css';
 
+// Component Imports
+import UsersError from '/components/usersError';
+
 export default function UsersPage({ params }) {
 	const currentChannelID = params.channel;
 
 	const [usersList, setUsersList] = useState([]);
+	const [usersState, setUsersState] = useState('loading');
 
 	// Context Variables
 	const { userToken } = useContext(myContext);
@@ -36,14 +40,22 @@ export default function UsersPage({ params }) {
 
 			// Check if response is ok
 			if (!response.ok) {
+				setUsersState('error');
 				return;
 			}
 
 			let data = await response.json();
 
 			setUsersList(data);
+			setUsersState('loaded');
 		})();
 	}, [userToken, currentChannelID]);
+
+	if (usersState == 'error') {
+		return <UsersError message={'An Error occured, try reloading'} />;
+	} else if (usersState == 'loading') {
+		return <UsersError message={'Loading Users...'} />;
+	}
 
 	return (
 		<ul id="users-page">
