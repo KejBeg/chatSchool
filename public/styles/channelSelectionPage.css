@@ -132,3 +132,16 @@
 		}
 	}
 }
+
+@media (max-width: 768px) {
+	#channel-list {
+		grid-template-columns: repeat(auto-fill, minmax(40vw, 1fr));
+	}
+}
+
+@media (max-width: 480px) {
+	#channel-list {
+		grid-template-columns: repeat(auto-fill, minmax(80vw, 1fr));
+	}
+}
+
