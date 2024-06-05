@@ -29,10 +29,12 @@ export async function DELETE(request) {
 			return new Response('Unauthorized', { status: 401 });
 		}
 
+		// Delete the messages of the channel
+		await executeQuery('DELETE FROM messages WHERE channel = ?', [channelID]);
+
 		// Delete the channel
-		console.log('before delete');
 		executeQuery('DELETE FROM channels WHERE id = ?', [channelID]);
-		console.log('after delete');
+
 		return new Response('Channel deleted', { status: 200 });
 	} catch (error) {
 		console.log(error);

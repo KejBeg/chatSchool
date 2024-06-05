@@ -1,17 +1,20 @@
+// Imports
 import { createServer } from 'node:http';
-import next from 'next';
 import { Server } from 'socket.io';
 import { setupDatabase } from './tools/database.js';
+import next from 'next';
 import cors from 'cors';
 
+// Create constants for the environment variables
 const dev = process.env.NODE_ENV !== 'production';
 const hostname = process.env.HOST || 'localhost';
 const port = process.env.PORT || 3000;
 
-// when using middleware `hostname` and `port` must be provided below
+// Create the Next.js app
 const app = next({ dev, hostname, port });
 const handler = app.getRequestHandler();
 
+// Prepare the Next.js app
 app.prepare().then(() => {
 	const httpServer = createServer((req, res) => {
 		// Enable CORS for all routes
@@ -35,6 +38,7 @@ app.prepare().then(() => {
 	// Setup the database
 	setupDatabase();
 
+	// This handles the instant message sending
 	io.on('connection', (socket) => {
 		socket.on('sendMessage', (messageObject) => {
 			io.emit('messageSent', messageObject);

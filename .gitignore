@@ -2,6 +2,7 @@
 /node_modules
 /.next
 /.idea
+/.vscode
 
 # dotenv environment variables file
 .env
