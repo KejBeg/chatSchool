@@ -2,22 +2,29 @@
 	display: grid;
 	width: 100%;
 	height: calc(100vh - var(--navbar-height) - var(--navbar-border));
+	height: fit-content;
+	overflow-x: hidden;
+	overflow-y: auto;
+	margin-right: 1vw;
 
 	li {
-		display: flex;
-		align-items: center;
-		list-style-type: none;
+		display: grid;
 		width: 100%;
 		height: 100%;
+		grid-template-columns: 1fr 3fr;
 
 		.name {
-			margin: 1vw;
+			display: flex;
+			width: 100%;
+			height: 100%;
+			align-items: center;
+			justify-content: center;
 		}
 
 		.picture {
 			img {
-				width: 7.5vw;
-				height: 7.5vw;
+				width: 5vw;
+				height: 5vw;
 				border-radius: 50%;
 				margin: 1vw;
 			}
