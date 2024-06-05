@@ -24,7 +24,6 @@ app.prepare().then(() => {
 				return;
 			}
 
-			// Pass the request to the next middleware (Next.js request handler in this case)
 			handler(req, res);
 		});
 	});
