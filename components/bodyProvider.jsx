@@ -3,10 +3,9 @@
 // Module Imports
 import { useEffect, useState } from 'react';
 import { useUser } from '@auth0/nextjs-auth0/client';
-import Head from 'next/head';
 
 // Tool Imports
-import myContext from '/contexts/mainContextProvider.jsx';
+import myContext from '/contexts/mainContextProvider';
 import { getUserToken } from '/tools/publicTools';
 import { socket } from '/tools/socket';
 
@@ -44,12 +43,7 @@ export default function BodyProvider({ children }) {
 	return (
 		<myContext.Provider value={{ ...contextVariables }}>
 			<Navbar />
-			<main>
-				<Head>
-					<title>My page title</title>
-				</Head>
-				{children}
-			</main>
+			<main>{children}</main>
 		</myContext.Provider>
 	);
 }

@@ -5,6 +5,12 @@ dotenv.config();
 
 // Create a connection to the database
 let con;
+
+/**
+ * Establishes a connection to the database.
+ * @returns {void}
+ * @throws {Error} If the database connection fails.
+ */
 try {
 	con = db.createConnection({
 		host: process.env.DB_HOST,
@@ -16,20 +22,6 @@ try {
 } catch (error) {
 	console.log('Database Connection Failed');
 	throw error;
-}
-
-/**
- * Connects to the database.
- */
-function connectDatabase() {
-	con.connect((error) => {
-		if (error) {
-			console.log('Database Connection Failed');
-			throw error;
-		} else {
-			console.log('Database Connected');
-		}
-	});
 }
 
 /**
@@ -48,7 +40,9 @@ export async function executeQuery(query, values = []) {
 				console.log(`result : ${result}`);
 
 				// Reconnect to the database if the connection is lost
-				if (error.code == 'PROTOCOL_CONNECTION_LOST') connectDatabase();
+				if (error.code == 'PROTOCOL_CONNECTION_LOST') {
+					con.connnect();
+				}
 
 				// Reject the promise
 				reject(error);

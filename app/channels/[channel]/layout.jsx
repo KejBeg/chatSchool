@@ -1,5 +1,5 @@
 export const metadata = {
-	title: 'Chat App | Channel ',
+	title: 'BadCord | Channel ',
 };
 
 export default function Layout({ children }) {
