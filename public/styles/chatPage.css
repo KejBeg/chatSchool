@@ -10,7 +10,7 @@
 
 	#chat-window-list-container {
 		display: flex;
-		width: 100%;
+		width: calc(4 / 6 * 100vw);
 		height: 100%;
 		justify-content: center;
 		align-items: center;
@@ -26,6 +26,7 @@
 
 			/* Scrolling behavour */
 			overflow-y: auto;
+			overflow-x: auto;
 
 			& li {
 				display: flex;
@@ -84,6 +85,14 @@
 					height: 3vh;
 				}
 			}
+		}
+	}
+}
+
+@media (max-width: 960px) {
+	#chat-page {
+		#chat-window-list-container {
+			width: calc(3 / 4 * 100vw);
 		}
 	}
 }

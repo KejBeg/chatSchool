@@ -11,12 +11,17 @@ import BodyProvider from '/components/bodyProvider';
 import '/public/styles/globals.css';
 
 export const metadata = {
-	title: 'Chat App | Channels',
+	title: 'BadCord| Channels',
+	icon: '/public/badcord.png',
 };
 
 export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
+			<link
+				rel="icon"
+				href="/images/badcord.png"
+			/>
 			<UserProvider>
 				<body>
 					<BodyProvider children={children} />
