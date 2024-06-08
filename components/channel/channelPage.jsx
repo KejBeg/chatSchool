@@ -4,16 +4,17 @@
 import { useContext, useEffect, useState } from 'react';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import Link from 'next/link';
+import { toast } from 'react-toastify';
 
 // Tool Imports
 import myContext from '/contexts/mainContextProvider';
 
 // Style Imports
-import style from '/public/styles/channelPage.css';
+import '/public/styles/channelPage.css';
 
 // Component Imports
-import ChannelList from '/components/channelList.jsx';
-import ChannelCreation from '/components/channelCreation.jsx';
+import ChannelList from '/components/channel/channelList';
+import ChannelCreation from '/components/channel/channelCreation';
 
 export default function ChannelPage({ params }) {
 	let currentChannelID = params.channel;
@@ -57,12 +58,14 @@ export default function ChannelPage({ params }) {
 			}
 
 			setChannels(data);
+			toast('Channels loaded successfully!');
 			setChannelsState('loaded');
 		})();
 	}, [userToken, refreshChannels]);
 
 	return (
 		<ul id="channel-page">
+			<button onClick={() => toast('Testing toast')}>Test Toast</button>
 			<ChannelList
 				currentChannelID={currentChannelID}
 				setRefreshChannels={setRefreshChannels}

@@ -8,9 +8,9 @@
 import channel from '/public/styles/channel.css';
 
 // Component Imports
-import ChannelPage from '/components/channelPage.jsx';
-import ChatPage from '/components/chatPage';
-import UsersPage from '/components/usersPage';
+import ChannelPage from '/components/channel/channelPage';
+import ChatPage from '/components/chat/chatPage';
+import UsersPage from '/components/users/usersPage';
 
 export default function Page({ params }) {
 	return (
