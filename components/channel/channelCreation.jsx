@@ -3,7 +3,7 @@
 // Module Imports
 import { useState } from 'react';
 
-export default function ChannelPageCreation({ refreshChannels, setRefreshChannels, userToken }) {
+export default function ChannelCreation({ refreshChannels, setRefreshChannels, userToken }) {
 	const [showCreateChannel, setShowCreateChannel] = useState(false);
 	const [channelName, setChannelName] = useState('');
 

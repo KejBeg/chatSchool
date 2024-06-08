@@ -6,10 +6,10 @@ import { useContext } from 'react';
 import myContext from '/contexts/mainContextProvider';
 
 /// Style Imports
-import style from '/public/styles/usersPage.css';
+import '/public/styles/usersPage.css';
 
 // Component Imports
-import UsersError from '/components/usersError';
+import UsersError from '/components/users/usersError';
 
 export default function UsersPage({ params }) {
 	const currentChannelID = params.channel;

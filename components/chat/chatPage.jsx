@@ -7,11 +7,11 @@ import { useEffect, useState, useContext } from 'react';
 import mainContext from '/contexts/mainContextProvider';
 
 // Component Imports
-import ChatWindow from '/components/chatWindow';
-import ChatInput from '/components/chatInput';
+import ChatWindow from '/components/chat/chatWindow';
+import ChatInput from '/components/chat/chatInput';
 
 // Style Imports
-import styles from '/public/styles/chatPage.css';
+import '/public/styles/chatPage.css';
 
 export default function ChatPage({ params }) {
 	const currentChannelID = params.channel;

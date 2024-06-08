@@ -6,7 +6,7 @@ import { useRef, useEffect, useState } from 'react';
 // Tool Imports
 
 // Component Imports
-import ChatError from '/components/chatError';
+import ChatError from '/components/chat/chatError';
 
 export default function ChatWindow({ currentChannelID, messageList, messageState }) {
 	// State Variables

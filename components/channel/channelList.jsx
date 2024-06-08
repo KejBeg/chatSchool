@@ -1,18 +1,54 @@
 // Module Imports
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 
 // Component Imports
-import ChannelsError from '/components/channelsError';
+import ChannelsError from '/components/channel/channelsError';
 
 export default function ChannelPage({
-	channelsState,
-	setRefreshChannels,
 	refreshChannels,
-	channels,
-	user,
-	userToken,
+	setRefreshChannels,
 	currentChannelID,
+	channelsState,
+	setChannelsState,
+	userToken,
+	user,
 }) {
+	// State Variables
+	const [channels, setChannels] = useState([]);
+
+	useEffect(() => {
+		// Fetch user channels
+		(async () => {
+			// Check if user token is available
+			if (!userToken) return;
+
+			// Fetch user channels
+			let response = await fetch('/api/channelManagement/getUserChannels', {
+				method: 'GET',
+				headers: {
+					authorization: userToken,
+				},
+			});
+
+			// Check if response is ok
+			if (!response.ok) {
+				setChannelsState('error');
+				return;
+			}
+
+			let data = await response.json();
+
+			if (data.length === 0) {
+				setChannelsState('noChannels');
+				return;
+			}
+
+			setChannels(data);
+			setChannelsState('loaded');
+		})();
+	}, [userToken, refreshChannels]);
+
 	const deleteChannel = async (channelID) => {
 		// Check if user token is available
 		if (!userToken) return;

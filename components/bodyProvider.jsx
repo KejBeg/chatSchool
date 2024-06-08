@@ -3,6 +3,7 @@
 // Module Imports
 import { useEffect, useState } from 'react';
 import { useUser } from '@auth0/nextjs-auth0/client';
+import { ToastContainer } from 'react-toastify';
 
 // Tool Imports
 import myContext from '/contexts/mainContextProvider';
@@ -11,6 +12,8 @@ import { socket } from '/tools/socket';
 
 // Component Imports
 import Navbar from '/components/navbar';
+
+// Style Imports
 
 export default function BodyProvider({ children }) {
 	const [contextVariables, setContextVariables] = useState({});
@@ -43,6 +46,7 @@ export default function BodyProvider({ children }) {
 	return (
 		<myContext.Provider value={{ ...contextVariables }}>
 			<Navbar />
+			<ToastContainer />
 			<main>{children}</main>
 		</myContext.Provider>
 	);
