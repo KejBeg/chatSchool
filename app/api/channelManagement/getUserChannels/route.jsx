@@ -11,6 +11,7 @@ export async function GET(request) {
 
 		// Check if user is authorized
 		if (!userObject || !authorization) {
+			console.log('Unauthorized because userObject or authorization is null');
 			return new Response('Unauthorized', { status: 401 });
 		}
 
@@ -20,6 +21,8 @@ export async function GET(request) {
 			[JSON.stringify(userObject.sub)]
 		);
 
+		// Return Response
+		console.log(`Channels for user ${userObject.sub} fetched successfully`);
 		return new Response(channels, { status: 200 });
 	} catch (error) {
 		console.log(error);

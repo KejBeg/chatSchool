@@ -5,15 +5,10 @@ import { useEffect, useState } from 'react';
 import { useContext } from 'react';
 import myContext from '/contexts/mainContextProvider';
 
-/// Style Imports
-import '/public/styles/usersPage.css';
-
 // Component Imports
 import UsersError from '/components/users/usersError';
 
-export default function UsersPage({ params }) {
-	const currentChannelID = params.channel;
-
+export default function UsersPage({ channelID }) {
 	const [usersList, setUsersList] = useState([]);
 	const [usersState, setUsersState] = useState('loading');
 
@@ -23,7 +18,7 @@ export default function UsersPage({ params }) {
 	useEffect(() => {
 		// Fetch channel users
 		(async () => {
-			if (currentChannelID == 1) return;
+			if (channelID == 1) return;
 
 			// Check if user token is available
 			if (!userToken) return;
@@ -35,7 +30,7 @@ export default function UsersPage({ params }) {
 					'Content-Type': 'application/json',
 					authorization: userToken,
 				},
-				body: JSON.stringify({ channelID: currentChannelID }),
+				body: JSON.stringify({ channelID: channelID }),
 			});
 
 			// Check if response is ok
@@ -49,7 +44,7 @@ export default function UsersPage({ params }) {
 			setUsersList(data);
 			setUsersState('loaded');
 		})();
-	}, [userToken, currentChannelID]);
+	}, [userToken, channelID]);
 
 	if (usersState == 'error') {
 		return <UsersError message={'An Error occured, try reloading'} />;
@@ -58,16 +53,19 @@ export default function UsersPage({ params }) {
 	}
 
 	return (
-		<ul id="users-page">
+		<ul className="grid grid-rows-[repeat(10,1fr)] p-3 w-full h-full overflow-x-hidden overflow-y-auto">
 			{usersList.map((user) => (
-				<li key={user.sub}>
-					<div className="picture">
+				<li
+					key={user.sub}
+					className="flex justify-center items-center pr-1 pl-1 w-full h-full">
+					<div className="flex justify-start items-center w-full h-full">
 						<img
 							src={user.picture}
-							alt={`${user.name}'s picture`}
+							alt={`${user.name} picture`}
+							className="rounded-full"
 						/>
 					</div>
-					<div className="name">{user.name}</div>
+					<div className="flex justify-center items-center w-full h-full">{user.name}</div>
 				</li>
 			))}
 		</ul>

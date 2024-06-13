@@ -13,6 +13,7 @@ export async function POST(request) {
 
 		// Check if channelID is provided
 		if (!channelID) {
+			console.log('channelID was not provided');
 			return new Response('channelID is required', { status: 400 });
 		}
 
@@ -44,6 +45,7 @@ export async function POST(request) {
 		invite = JSON.parse(invite)[0];
 
 		// Return Response
+		console.log(`Invite for channel ${channelID} created successfully by user ${userObject.sub}`);
 		invite = JSON.stringify(invite);
 		return new Response(invite, { status: 200 });
 	} catch (error) {

@@ -8,7 +8,7 @@
 import channel from '/public/styles/channel.css';
 
 // Component Imports
-import ChannelPage from '/components/channel/channelPage';
+import ChannelPage from '../../../components/sidebar/channelPage';
 import ChatPage from '/components/chat/chatPage';
 import UsersPage from '/components/users/usersPage';
 

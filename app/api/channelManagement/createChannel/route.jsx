@@ -15,19 +15,23 @@ export async function POST(request) {
 
 		// Check if the channel name is provided
 		if (!channelName) {
+			console.log(`Channel name was not provided`);
 			return new Response('Channel name is required', { status: 400 });
 		}
 
 		if (channelName.length > 50) {
+			console.log(`Channel name is too long`);
 			return new Response('Channel name is too long', { status: 400 });
 		}
 
 		if (channelName == 'Global') {
+			console.log(`Channel name is reserved`);
 			return new Response('Channel name is reserved', { status: 400 });
 		}
 
 		// Check if authorization or userObject is null
 		if (!authorization || !userObject) {
+			console.log(`Unauthorized`);
 			return new Response('Unauthorized', { status: 401 });
 		}
 
@@ -37,6 +41,8 @@ export async function POST(request) {
 			[channelName, userObject.sub, userObject.sub]
 		);
 
+		// Return the response
+		console.log(`Channel ${channelName} was created by user ${userObject.sub}`);
 		return new Response('Channel created', { status: 200 });
 	} catch (error) {
 		console.log(error);

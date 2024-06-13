@@ -34,13 +34,15 @@ export default function ChatWindow({ currentChannelID, messageList, messageState
 	}
 
 	return (
-		<div id="chat-window-list-container">
-			<ul ref={ulRef}>
+		<div
+			className="flex m-5 p-5 border rounded w-[60vw] h-[80vh] overflow-x-hidden overflow-y-auto"
+			ref={ulRef}>
+			<ul>
 				{messageList.map((message, i) => (
 					<li key={i}>
-						<span className="message-ownerName">{message.ownerName}</span>
-						<span>:</span>
-						<span className="message-text">{message.message}</span>
+						<span className="">{message.ownerName}</span>
+						<span className="m-1">:</span>
+						<span className="">{message.message}</span>
 					</li>
 				))}
 			</ul>

@@ -10,12 +10,7 @@ import mainContext from '/contexts/mainContextProvider';
 import ChatWindow from '/components/chat/chatWindow';
 import ChatInput from '/components/chat/chatInput';
 
-// Style Imports
-import '/public/styles/chatPage.css';
-
-export default function ChatPage({ params }) {
-	const currentChannelID = params.channel;
-
+export default function ChatPage({ channelID }) {
 	// State Variables
 	const [messageList, setMessageList] = useState([]);
 	const [messageState, setMessageState] = useState('loading');
@@ -28,7 +23,7 @@ export default function ChatPage({ params }) {
 		// New message handling
 		if (!socket) return;
 		socket.on('messageSent', (messageObject) => {
-			if (messageObject.channelID != currentChannelID) return;
+			if (messageObject.channelID != channelID) return;
 
 			let newMessageList = [...messageList];
 
@@ -50,7 +45,7 @@ export default function ChatPage({ params }) {
 					'Content-Type': 'application/json',
 					authorization: userToken,
 				},
-				body: JSON.stringify({ channelID: currentChannelID }),
+				body: JSON.stringify({ channelID: channelID }),
 			});
 
 			// Check if the response is ok
@@ -67,7 +62,7 @@ export default function ChatPage({ params }) {
 
 			// Scroll to the bottom of the chat window
 		})();
-	}, [userToken]);
+	}, [userToken, channelID]);
 
 	// Checking if the message list is present
 	if (messageList.length <= 0 && messageState == 'loaded') {
@@ -75,14 +70,14 @@ export default function ChatPage({ params }) {
 	}
 
 	return (
-		<div id="chat-page">
+		<div className="grid grid-rows[9fr,1fr] w-full h-screen">
 			<ChatWindow
-				currentChannelID={currentChannelID}
+				currentChannelID={channelID}
 				messageList={messageList}
 				messageState={messageState}
 			/>
 			<ChatInput
-				currentChannelID={currentChannelID}
+				currentChannelID={channelID}
 				messageList={messageList}
 				messageState={messageState}
 			/>

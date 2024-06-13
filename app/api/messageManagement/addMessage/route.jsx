@@ -13,14 +13,29 @@ export async function POST(request) {
 		const channelID = requestBody.channelID;
 		const creation_datetime = requestBody.creation_datetime;
 
-		// Check if the message is provided
-		if (!message) {
-			return new Response('message is required', { status: 400 });
-		}
-
 		// Check if authorization or userObject is null
 		if (!authorization || !userObject) {
+			console.log('Unauthorized because userObject or authorization is null');
 			return new Response('Unauthorized', { status: 401 });
+		}
+
+		// Check if channelID is provided
+		if (!channelID) {
+			console.log(`channelID was not provided by user ${userObject.sub}`);
+			return new Response('channelID is required', { status: 400 });
+		}
+
+		if (!creation_datetime) {
+			console.log(
+				`creation_datetime was not provided by user ${userObject.sub} in channel ${channelID}`
+			);
+			return new Response('creation_datetime is required', { status: 400 });
+		}
+
+		// Check if the message is provided
+		if (!message) {
+			console.log(`Message was not provided by user ${userObject.sub} in channel ${channelID}`);
+			return new Response('message is required', { status: 400 });
 		}
 
 		// Saving the message to the database
@@ -29,6 +44,8 @@ export async function POST(request) {
 			[message, userObject.sub, creation_datetime, channelID]
 		);
 
+		// Return Response
+		console.log(`Message sent by user ${userObject.sub} in channel ${channelID}`);
 		return new Response('Message sent', { status: 200 });
 	} catch (error) {
 		console.log(error);

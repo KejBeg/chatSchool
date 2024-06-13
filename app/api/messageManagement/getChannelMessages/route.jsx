@@ -5,8 +5,6 @@ import { getUserObjectBySub, getAllUsers } from '/tools/privateTools';
 import { executeQuery } from '/tools/database.js';
 import { getUserObjectByToken } from '/tools/publicTools';
 
-import {} from '@auth0/nextjs-auth0';
-
 export async function POST(request) {
 	try {
 		const requestBody = await request.json();
@@ -14,14 +12,16 @@ export async function POST(request) {
 		const channelID = requestBody.channelID;
 		const userObject = await getUserObjectByToken(authorization);
 
-		// Check if the channel name is provided
-		if (!channelID) {
-			return new Response('Channel ID is required', { status: 400 });
-		}
-
 		// Check if authorization or userObject is null
 		if (!authorization || !userObject) {
+			console.log('Unauthorized because userObject or authorization is null');
 			return new Response('Unauthorized', { status: 401 });
+		}
+
+		// Check if the channel name is provided
+		if (!channelID) {
+			console.log(`Channel ID was not provided by user ${userObject.sub}`);
+			return new Response('Channel ID is required', { status: 400 });
 		}
 
 		// If the channel is the global channel (meaning the ID is 1), get all messages
@@ -40,6 +40,7 @@ export async function POST(request) {
 			channelUsers = JSON.parse(channelUsers);
 
 			if (channelUsers.length == 0 || !channelUsers) {
+				console.log(`User ${userObject.sub} is not in channel ${channelID}`);
 				return new Response('Unauthorized', { status: 401 });
 			}
 
@@ -60,6 +61,8 @@ export async function POST(request) {
 			return message;
 		});
 
+		// Return Response
+		console.log(`Messages for channel ${channelID} fetched successfully by user ${userObject.sub}`);
 		return new Response(JSON.stringify(messages), { status: 200 });
 	} catch (error) {
 		console.log(error);

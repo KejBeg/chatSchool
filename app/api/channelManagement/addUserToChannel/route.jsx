@@ -13,12 +13,14 @@ export async function POST(request) {
 
 		// Check if user is authorized
 		if (!userObject || !authorization) {
+			console.log(`User is not authorized`);
 			return new Response('Unauthorized', { status: 401 });
 		}
 
-		// Check if channelID is provided
+		// Check if invite is provided
 		if (!invite) {
-			return new Response('channelID is required', { status: 400 });
+			console.log(`Invite was not provided`);
+			return new Response('Invite is required', { status: 400 });
 		}
 
 		// Getting expiration datetime
@@ -30,6 +32,7 @@ export async function POST(request) {
 
 		// Check if invite is expired
 		if (new Date(expirationDatetime) < new Date()) {
+			console.log(`Invite ${invite} is expired`);
 			return new Response('Invite is expired', { status: 400 });
 		}
 
@@ -50,6 +53,8 @@ export async function POST(request) {
 			[userObject.sub, invite]
 		);
 
+		// Returning response
+		console.log(`User ${userObject.sub} added to channel with invite ${invite}`);
 		return new Response('User added to channel', { status: 200 });
 	} catch (error) {
 		console.log(error);
