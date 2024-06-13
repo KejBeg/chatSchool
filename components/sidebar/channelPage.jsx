@@ -1,10 +1,7 @@
-'use client';
-
 // Module Imports
 import { useContext, useEffect, useState } from 'react';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import Link from 'next/link';
-import { toast } from 'react-toastify';
 
 // Tool Imports
 import myContext from '/contexts/mainContextProvider';
@@ -13,12 +10,11 @@ import myContext from '/contexts/mainContextProvider';
 import '/public/styles/channelPage.css';
 
 // Component Imports
-import ChannelList from '/components/channel/channelList';
-import ChannelCreation from '/components/channel/channelCreation';
+import ChannelList from './channelList';
+import ChannelCreation from './channelCreation';
+import Profile from '/components/sidebar/profile';
 
-export default function ChannelPage({ params }) {
-	let currentChannelID = params.channel;
-
+export default function ChannelPage({ channelID, setChannelID }) {
 	// State Variables
 	const [refreshChannels, setRefreshChannels] = useState(false);
 	const [channels, setChannels] = useState([]);
@@ -58,29 +54,32 @@ export default function ChannelPage({ params }) {
 			}
 
 			setChannels(data);
-			toast('Channels loaded successfully!');
 			setChannelsState('loaded');
 		})();
 	}, [userToken, refreshChannels]);
 
 	return (
-		<ul id="channel-page">
-			<button onClick={() => toast('Testing toast')}>Test Toast</button>
-			<ChannelList
-				currentChannelID={currentChannelID}
-				setRefreshChannels={setRefreshChannels}
-				refreshChannels={refreshChannels}
-				channels={channels}
-				user={user}
-				userToken={userToken}
-				channelsState={channelsState}
-			/>
-			<ChannelCreation
-				refreshChannels={refreshChannels}
-				setRefreshChannels={setRefreshChannels}
-				userToken={userToken}
-			/>
-		</ul>
+		<div className="grid grid-rows-[9fr,2fr] border border-black w-full h-screen">
+			<ul className="grid grid-rows-[auto,1fr] p-2 overflow-x-hidden overflow-y-auto">
+				<ChannelList
+					channelID={channelID}
+					setRefreshChannels={setRefreshChannels}
+					refreshChannels={refreshChannels}
+					setChannelsState={setChannelsState}
+					channels={channels}
+					user={user}
+					userToken={userToken}
+					channelsState={channelsState}
+					setChannelID={setChannelID}
+				/>
+				<ChannelCreation
+					refreshChannels={refreshChannels}
+					setRefreshChannels={setRefreshChannels}
+					userToken={userToken}
+				/>
+			</ul>
+			<Profile user={user} />
+		</div>
 	);
 }
 

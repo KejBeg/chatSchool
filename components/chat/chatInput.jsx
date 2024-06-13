@@ -55,23 +55,24 @@ export default function chatInput({ currentChannelID, messageState }) {
 	}
 
 	return (
-		<div id="chat-input-container">
-			<form onSubmit={(e) => handleSubmit(e)}>
+		<div className="flex justify-center items-center m-5 p-5 w-full h-full">
+			<form
+				onSubmit={(e) => handleSubmit(e)}
+				className="flex justify-center items-center w-full h-[50%]">
 				<input
+					className="bg-gray-200 p-3 border-none rounded-lg w-full h-full"
 					autoFocus
 					type="text"
 					value={message}
 					onChange={(e) => setMessage(e.target.value)}
 				/>
-				<button
-					hidden={!message}
-					type="submit">
+				{/* TODO */}
+				{/* <button type="submit">
 					<img
-						hidden={!message}
 						src="/images/send.svg"
 						alt="send"
 					/>
-				</button>
+				</button> */}
 			</form>
 		</div>
 	);

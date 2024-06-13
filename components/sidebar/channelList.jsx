@@ -3,16 +3,17 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
 // Component Imports
-import ChannelsError from '/components/channel/channelsError';
+import ChannelsError from './channelsError';
 
 export default function ChannelPage({
 	refreshChannels,
 	setRefreshChannels,
-	currentChannelID,
+	channelID,
 	channelsState,
 	setChannelsState,
 	userToken,
 	user,
+	setChannelID,
 }) {
 	// State Variables
 	const [channels, setChannels] = useState([]);
@@ -102,19 +103,28 @@ export default function ChannelPage({
 		<>
 			{channels.map((channel) => (
 				<li
-					key={channel.id}
-					id={(channel.id == currentChannelID && 'active-channel') || ''}>
-					<Link href={`/channels/${channel.id}`}>{channel.name}</Link>
+					className={`flex border-[1px] border-black rounded w-full h-[20vh] ${
+						channelID === channel.id ? 'bg-gray-400' : ''
+					}`}
+					key={channel.id}>
 					<button
+						onClick={(e) => setChannelID(channel.id)}
+						className="flex justify-center items-center hover:bg-gray-200 w-full h-full transition-all duration-[350]">
+						{channel.name}
+					</button>
+					<button
+						className="flex justify-end items-center hover:bg-gray-200 w-16 h-full transition-all duration-[350]"
 						type="button"
 						onClick={(e) => copyChannelInvite(channel.id)}>
 						<img
+							className="w-9 h-9"
 							src="/images/copy.svg"
 							alt="copy"
 						/>
 					</button>
 					{channel.owner === user.sub && (
 						<button
+							className="flex justify-end items-center bg-red-500 hover:bg-red-700 w-16 h-full transition-all duration-[350]"
 							type="button"
 							onClick={(e) => deleteChannel(channel.id)}>
 							<img

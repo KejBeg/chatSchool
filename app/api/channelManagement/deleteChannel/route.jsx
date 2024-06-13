@@ -13,11 +13,13 @@ export async function DELETE(request) {
 
 		// Check if the channel ID is provided
 		if (!channelID) {
+			console.log(`Channel ID was not provided`);
 			return new Response('Channel ID is required', { status: 400 });
 		}
 
 		// Check if authorization or userObject is null
 		if (!authorization || !userObject) {
+			console.log(`UserToken or userObject is null`);
 			return new Response('Unauthorized', { status: 401 });
 		}
 
@@ -26,6 +28,7 @@ export async function DELETE(request) {
 		channel = JSON.parse(channel);
 		channel = channel[0];
 		if (channel.owner !== userObject.sub) {
+			console.log(`User ${user} is not the owner of channel ${channelID}`);
 			return new Response('Unauthorized', { status: 401 });
 		}
 
@@ -35,6 +38,8 @@ export async function DELETE(request) {
 		// Delete the channel
 		executeQuery('DELETE FROM channels WHERE id = ?', [channelID]);
 
+		// Return the response
+		console.log(`Channel ${channelID} deleted`);
 		return new Response('Channel deleted', { status: 200 });
 	} catch (error) {
 		console.log(error);

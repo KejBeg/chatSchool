@@ -12,11 +12,13 @@ export async function POST(request) {
 
 		// Check if user is authorized
 		if (!userObject || !authorization) {
+			console.log('Unauthorized because userObject or authorization is null');
 			return new Response('Unauthorized', { status: 401 });
 		}
 
 		// Check if channelID is provided
 		if (!channelID) {
+			console.log('channelID was not provided');
 			return new Response('channelID is required', { status: 400 });
 		}
 
@@ -40,6 +42,8 @@ export async function POST(request) {
 		});
 		channelUsersObjectList = JSON.stringify(channelUsersObjectList);
 
+		// Return Response
+		console.log(`Users for channel ${channelID} fetched successfully by user ${userObject.sub}`);
 		return new Response(channelUsersObjectList, { status: 200 });
 	} catch (error) {
 		console.error(error);

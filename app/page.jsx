@@ -1,50 +1,22 @@
 'use client';
 
-// Module Imports
-import { useContext, useEffect, useState } from 'react';
-import { useUser } from '@auth0/nextjs-auth0/client';
-import Link from 'next/link';
-
-// Tool Imports
-import myContext from '/contexts/mainContextProvider';
-
-// Style Imports
-import '/public/styles/channelSelectionPage.css';
-
-// Component Imports
-import ChannelList from '/components/channel/channelList.jsx';
-import ChannelCreation from '/components/channel/channelCreation';
+import { useState } from 'react';
+import ChannelPage from '../components/sidebar/channelPage';
+import ChatPage from '/components/chat/chatPage';
+import UsersPage from '/components/users/usersPage';
 
 export default function Page() {
-	// State Variables
-	const [refreshChannels, setRefreshChannels] = useState(false);
-	const [channelsState, setChannelsState] = useState('loading');
-
-	// Auth0 Variables
-	const { user, isLoading, error } = useUser();
-
-	// Context Variables
-	const { userToken } = useContext(myContext);
+	const [channelID, setChannelID] = useState(1);
 
 	return (
-		<ul id="channel-list">
-			<ChannelList
-				refreshChannels={refreshChannels}
-				setRefreshChannels={setRefreshChannels}
-				channelsState={channelsState}
-				setChannelsState={setChannelsState}
-				userToken={userToken}
-				user={user}
-				currentChannelID={null}
+		<div className="grid grid-cols-[1fr,3fr,1fr] w-full h-screen overflow-hidden">
+			<ChannelPage
+				channelID={channelID}
+				setChannelID={setChannelID}
 			/>
-			{(channelsState == 'loaded' || channelsState == 'noChannels') && (
-				<ChannelCreation
-					refreshChannels={refreshChannels}
-					setRefreshChannels={setRefreshChannels}
-					userToken={userToken}
-				/>
-			)}
-		</ul>
+			<ChatPage channelID={channelID} />
+			<UsersPage channelID={channelID} />
+		</div>
 	);
 }
 

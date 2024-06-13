@@ -45,9 +45,9 @@ export default function BodyProvider({ children }) {
 
 	return (
 		<myContext.Provider value={{ ...contextVariables }}>
-			<Navbar />
+			{/* <Navbar /> */}
 			<ToastContainer />
-			<main>{children}</main>
+			<main className="h-screen w-screen">{children}</main>
 		</myContext.Provider>
 	);
 }

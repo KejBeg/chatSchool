@@ -32,9 +32,10 @@ export default function ChannelCreation({ refreshChannels, setRefreshChannels, u
 		setRefreshChannels(!refreshChannels);
 	};
 	return (
-		<li>
+		<li className="flex border-[1px] border-black rounded w-full h-[20vh]">
 			{(showCreateChannel && (
 				<form
+					className="grid grid-rows-[1fr,1fr,1fr] p-1 w-full h-full"
 					onSubmit={(e) => createChannel(e)}
 					onKeyDown={(event) => {
 						if (event.key == 'Escape') {
@@ -42,22 +43,32 @@ export default function ChannelCreation({ refreshChannels, setRefreshChannels, u
 							setChannelName('');
 						}
 					}}>
-					<label htmlFor="channelName">Channel Name</label>
+					<label
+						className="flex justify-center items-center w-full h-full"
+						htmlFor="channelName">
+						Channel Name
+					</label>
 					<input
+						className="flex border-[1px] p-2 border-black rounded w-full h-full"
 						autoFocus
 						value={channelName}
 						onChange={(e) => setChannelName(e.target.value)}
 						type="text"
 						name="channelName"
 					/>
-					<button type="submit">Create</button>
+					<button
+						className="flex justify-center items-center border-[1px] hover:bg-gray-200 border-black rounded w-full h-full"
+						type="submit">
+						Create
+					</button>
 				</form>
 			)) || (
 				<button
+					className="flex hover:bg-gray-200 w-full h-full transition-all duration-[350]"
 					type="button"
-					id="create-channel"
 					onClick={(e) => setShowCreateChannel(true)}>
 					<img
+						className="flex p-16 w-full h-full"
 						src="/images/plus.svg"
 						alt="plus"
 					/>
