@@ -9,12 +9,11 @@ export async function POST(request) {
 		const requestBody = await request.json();
 		const authorization = request.headers.get('authorization');
 		const userObject = await getUserObjectByToken(authorization);
-		const message = requestBody.message;
-		const channelID = requestBody.channelID;
-		const creation_datetime = requestBody.creation_datetime;
+		const { message, channelID, creation_datetime } = requestBody;
 
 		// Check if authorization or userObject is null
 		if (!authorization || !userObject) {
+			console.log(`userObject: ${userObject}, authorization: ${authorization}`);
 			console.log('Unauthorized because userObject or authorization is null');
 			return new Response('Unauthorized', { status: 401 });
 		}

@@ -2,6 +2,7 @@
 
 // Module Imports
 import { getAccessToken } from '@auth0/nextjs-auth0';
+import { getNextAccessToken } from '/tools/privateTools';
 
 export async function POST(request) {
 	try {

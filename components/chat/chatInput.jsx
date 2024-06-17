@@ -55,12 +55,12 @@ export default function chatInput({ currentChannelID, messageState }) {
 	}
 
 	return (
-		<div className="flex justify-center items-center m-5 p-5 w-full h-full">
+		<div className="flex justify-center items-center mr-3 ml-3 w-full h-full">
 			<form
 				onSubmit={(e) => handleSubmit(e)}
 				className="flex justify-center items-center w-full h-[50%]">
 				<input
-					className="bg-gray-200 p-3 border-none rounded-lg w-full h-full"
+					className="bg-gray-200 p-3 border-none rounded-lg w-[95%] h-full"
 					autoFocus
 					type="text"
 					value={message}
