@@ -8,20 +8,15 @@ import { useRef, useEffect, useState } from 'react';
 // Component Imports
 import ChatError from '/components/chat/chatError';
 
-export default function ChatWindow({ currentChannelID, messageList, messageState }) {
+export default function ChatWindow({ channelID, messageList, messageState, ulRef }) {
 	// State Variables
 	const [amountOfLoads, setAmountOfLoads] = useState(0);
-
-	// Ref Variables
-	const ulRef = useRef(null);
 
 	// Scrolls down only on the first load
 	useEffect(() => {
 		if (!ulRef.current || messageState != 'loaded') return;
 
-		// if (ulRef.current.scrollTop == ulRef.current.scrollHeight || amountOfLoads == 0) {
 		ulRef.current.scrollTop = ulRef.current.scrollHeight;
-		// }
 		setAmountOfLoads(amountOfLoads + 1);
 	}, [messageList]);
 
@@ -34,19 +29,15 @@ export default function ChatWindow({ currentChannelID, messageList, messageState
 	}
 
 	return (
-		<div
-			className="flex m-5 p-5 border rounded w-[60vw] h-[80vh] overflow-x-hidden overflow-y-auto"
-			ref={ulRef}>
-			<ul>
-				{messageList.map((message, i) => (
-					<li key={i}>
-						<span className="">{message.ownerName}</span>
-						<span className="m-1">:</span>
-						<span className="">{message.message}</span>
-					</li>
-				))}
-			</ul>
-		</div>
+		<>
+			{messageList.map((message, i) => (
+				<li key={i}>
+					<span className="">{message.ownerName}</span>
+					<span className="m-1">:</span>
+					<span className="">{message.message}</span>
+				</li>
+			))}
+		</>
 	);
 }
 

@@ -32,11 +32,15 @@ export async function getUserObjectByToken(userToken) {
 			},
 		});
 
-		if (!response.ok) return null;
+		if (!response.ok) {
+			console.log(`response: ${response}, json: ${JSON.stringify(await response.json())}`);
+			return null;
+		}
 
 		let data = await response.json();
 		return data;
 	} catch (error) {
+		console.log(error);
 		return null;
 	}
 }

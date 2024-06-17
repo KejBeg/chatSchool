@@ -1,7 +1,7 @@
 'use client';
 
 // Module Imports
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, useRef } from 'react';
 
 // Tool Imports
 import mainContext from '/contexts/mainContextProvider';
@@ -17,6 +17,9 @@ export default function ChatPage({ channelID }) {
 
 	// Context Variables
 	const { userToken, socket } = useContext(mainContext);
+
+	// Ref Variables
+	const ulRef = useRef(null);
 
 	// Socket useEffect
 	useEffect(() => {
@@ -71,11 +74,18 @@ export default function ChatPage({ channelID }) {
 
 	return (
 		<div className="grid grid-rows[9fr,1fr] w-full h-screen">
-			<ChatWindow
-				currentChannelID={channelID}
-				messageList={messageList}
-				messageState={messageState}
-			/>
+			<ul
+				ref={ulRef}
+				className={`m-5 p-5 border rounded  ${
+					channelID == 1 ? 'w-[80vw]' : 'w-[60vw]'
+				} overflow-x-hidden overflow-y-auto`}>
+				<ChatWindow
+					channelID={channelID}
+					messageList={messageList}
+					messageState={messageState}
+					ulRef={ulRef}
+				/>
+			</ul>
 			<ChatInput
 				currentChannelID={channelID}
 				messageList={messageList}
